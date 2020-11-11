@@ -24,7 +24,7 @@
   % \end{center}
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%
-
+\beginrequired
 %%%%%%%%%%%%%%%
 \begin{problem}[编译器, 然后呢?]
   观看系列视频 \href{https://www.bilibili.com/video/BV1EW411u7th?}{Crash Course Computer Science@bilibili}:
@@ -40,7 +40,12 @@
 %%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%
-\begin{problem}[]
+\begin{problem}[手写词法分析器]
+  根据下面的状态转移图, 给出识别数字的伪代码。
+  (推荐使用 \LaTeX{} 
+  \href{http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf}{\texttt{algorithmicx} 包})
+
+  \fig{width = 0.80\textwidth}{figs/number}
 \end{problem}
 
 \begin{solution}
@@ -48,15 +53,12 @@
 %%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%
-\begin{problem}[]
-\end{problem}
-
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%
-\begin{problem}[]
+\begin{problem}[正则表达式]
+  课堂上, 我们提到了下面的正则表达式可以用于识别所有(二进制表示的)3的倍数。
+  请证明该结论(或给出直观的解释)。
+  \[ 
+    \Big(0|\big(1(01^{\ast}0)^{\ast}1\big)\Big)^{\ast} 
+  \]
 \end{problem}
 
 \begin{solution}
