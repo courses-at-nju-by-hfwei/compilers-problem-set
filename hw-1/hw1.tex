@@ -2,13 +2,15 @@
 
 % !TEX program = xelatex
 %%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
 \documentclass[a4paper, justified]{tufte-handout}
 
-\input{hw-preamble} % feel free to modify this file
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
 %%%%%%%%%%%%%%%%%%%%
 \title{编译原理作业 (1)}
 \me{魏恒峰}{hfwei@nju.edu.cn}{}{}
-\date{\zhtoday} % or like 2019年9月13日
+\date{\zhtoday}
 %%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \maketitle
@@ -31,7 +33,7 @@
   \begin{itemize}
     \item $P5 \sim P8$; 总时长约45分钟
     \item 目的: 了解机器语言是如何跑起来的
-    \item 作业: 随便写点什么吧 (要能表明你确实学习了这些视频)
+    \item {\bf 作业:} 随便写点什么吧 (要能表明你确实学习了这些视频)
   \end{itemize}
 \end{problem}
 
@@ -41,11 +43,17 @@
 
 %%%%%%%%%%%%%%%
 \begin{problem}[手写词法分析器]
-  根据下面的状态转移图, 给出识别数字的伪代码。
+  根据下面的状态转移图以及课上介绍的识别方法, 给出识别数字
+  (正整数、不带科学计数法的浮点数以及带科学计数法的浮点数)的伪代码。
   (推荐使用 \LaTeX{} 
-  \href{http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf}{\texttt{algorithmicx} 包})
+  \href{http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf}{\texttt{algorithmicx} 包}
+  书写伪代码)
 
   \fig{width = 0.80\textwidth}{figs/number}
+
+  例如, 对于输入串 \texttt{1.23E+a4.5E6b78.c}, 
+  应该识别出 \texttt{1.23}, \texttt{4.5E6}, \texttt{78},
+  并且其余字符均应被视为神秘的未知字符。
 \end{problem}
 
 \begin{solution}
@@ -56,6 +64,7 @@
 \begin{problem}[正则表达式]
   课堂上, 我们提到了下面的正则表达式可以用于识别所有(二进制表示的)3的倍数。
   请证明该结论(或给出直观的解释)。
+  参考: \teal{\url{https://regex101.com/r/ED4qgC/1}}
   \[ 
     \Big(0|\big(1(01^{\ast}0)^{\ast}1\big)\Big)^{\ast} 
   \]
