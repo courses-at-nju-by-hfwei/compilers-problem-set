@@ -1,4 +1,4 @@
-% hw1.tex
+% hw2.tex
 
 % !TEX program = xelatex
 %%%%%%%%%%%%%%%%%%%%
@@ -10,7 +10,7 @@
 %%%%%%%%%%%%%%%%%%%%
 \title{编译原理作业 (2)}
 \me{魏恒峰}{hfwei@nju.edu.cn}{}{}
-\date{\zhtoday}
+\date{2020年11月19日}
 %%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \maketitle
@@ -30,10 +30,22 @@
 %%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%
-\begin{problem}[正则表达式与自动机 \score{10 = 2 + 3 + 2 + 2 + 1}]
+\begin{problem}[正则表达式与自动机 \score{10 = 2 + 2 + 2 + 2 + 2}]
   考虑正则表达式 $r = a(b|c)^{\ast}$。
+  \sidenote{
+    如何用 \LaTeX{} 写(复杂的)正则表达式?
+    \begin{itemize}
+      \item \href{https://tex.stackexchange.com/a/162122/23098}{How to escape properly and output regex in latex?@tex.stackexchange}
+    \end{itemize}
+  }
   \begin{enumerate}[(1)]
-    \item 使用 Thompson 构造法构造等价的 NFA;
+    \item 使用 Thompson 构造法构造等价的 NFA; \sidenote{
+      如何用 \LaTeX{} 画自动机?
+      \begin{itemize}
+        \item \href{https://www3.nd.edu/~kogge/courses/cse30151-fa17/Public/other/tikz\_tutorial.pdf}{使用{\texttt{tikz automata}} library}
+        \item \href{https://hayesall.com/blog/latex-automata/}{另一个关于\texttt{tikz automata}的教程}
+        \item 在\href{https://notendur.hi.is/aee11/automataLatexGen/}{网站\texttt{automataLatexGen}生成\LaTeX{}代码}
+      \end{itemize}}
     \item 使用子集构造法构造等价的 DFA;
     \item 将上一步构造的 DFA 最小化;
     \item 将上一步得到的最小 DFA 转化为等价的正则表达式, 记为 $r'$。
@@ -41,7 +53,8 @@
   \end{enumerate}
   以上各小题, 请给出关键的中间步骤。
   
-  \noindent (不必给出所有的细节, 尽量将解答部分控制在一页以内。)
+  \noindent (不必给出所有的细节, 类似的步骤可以``跳步''; 尽量将解答部分控制在两页以内。)
+
 \end{problem}
 
 \begin{solution}
