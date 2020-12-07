@@ -1,0 +1,71 @@
+%% geometry for A4 paper, word preference
+\usepackage{geometry}
+\geometry{
+  left=20.0mm,
+  right=20.mm,
+  top=10mm,
+  bottom=20.0mm
+}
+%% for font 
+\usepackage{xeCJK}
+%\newcommand{\song}{\CJKfamily{song}}
+%\newcommand{\kai}{\CJKfamily{kai}}
+
+%% author
+\newcommand{\me}[2]{
+  \author{
+    {\bfseries 姓名：}\underline{#1}\hspace{2em}
+    {\bfseries 邮箱：}\underline{#2}\hspace{2em}
+  }
+}
+
+%% for picture
+\usepackage{graphicx}
+
+%% for math
+\usepackage{amsmath,ntheorem}
+\theoremstyle{break} %标题换行
+%\theorembodyfont{\song}
+%\theoremheaderfont{\kai\bfseries}
+\newtheorem*{problem}{\Large{题目}}[subsection]
+
+\newenvironment{solution}
+{
+	\textbf{\Large{解答：}}\\
+}   
+
+%% for pseudocode
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\algblockdefx[SWITCH]{Switch}{EndSwitch}
+  [1]{\bf{Switch :} #1}
+  [0]{\bf{EndSwitch}}
+\algblockdefx[CASE]{Case}{EndCase}%
+  [1]{\bf{Case :} #1}%
+  [0]{\bf{EndCase} }
+
+
+%% algorithm分页
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {% \begin{breakablealgorithm}
+    \begin{center}
+      \refstepcounter{algorithm}% New algorithm
+      \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+      \renewcommand{\caption}[2][\relax]{% Make a new \caption
+        {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+        \ifx\relax##1\relax % #1 is \relax
+          \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+        \else % #1 is not \relax
+          \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+        \fi
+        \kern2pt\hrule\kern2pt
+      }
+  }{% \end{breakablealgorithm}
+      \kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+    \end{center}
+  }
+\makeatother
+  
+

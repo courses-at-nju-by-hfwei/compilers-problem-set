@@ -1,0 +1,49 @@
+% hw1.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (1)参考答案}
+\date{\zhtoday}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%
+\begin{answer}[手写词法分析器--5分]
+  根据下面的状态转移图以及课上介绍的识别方法, 给出识别数字
+  (正整数、不带科学计数法的浮点数以及带科学计数法的浮点数)的伪代码。
+  (推荐使用 \LaTeX{} 
+  \href{http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf}{\texttt{algorithmicx} 包}
+  书写伪代码)
+
+  \fig{width = 0.80\textwidth}{figs/number}
+
+  例如, 对于输入串 \texttt{1.23E+a4.5E6b78.c}, 
+  应该识别出 \texttt{1.23}, \texttt{4.5E6}, \texttt{78},
+  并且其余字符均应被视为神秘的未知字符。
+\end{answer}
+\begin{solution}
+  \begin{algorithm}
+    \caption{Parser}
+    \begin{algorithmic}[1]
+    \Procedure{Parse}{$str$}\Comment{str is input stream}
+    \State $r\gets a\bmod b$
+    \While{$r\not=0$}\Comment{We have the answer if r is 0}
+    \State $a\gets b$
+    \State $b\gets r$
+    \State $r\gets a\bmod b$
+    \EndWhile
+    \State \textbf{return} $b$\Comment{The gcd is b}
+    \EndProcedure
+    \end{algorithmic}
+ 
+  \end{algorithm}
+\end{solution}
+
+\end{document}
