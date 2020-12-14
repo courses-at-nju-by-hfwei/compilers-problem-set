@@ -1,0 +1,75 @@
+% hw3.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (3)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{2020年11月26日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 2 + 2 + 2 + 1 + 3}]
+  给定下述文法$G$,
+  \begin{align}
+    S &\to aAb \\[8pt]
+    S &\to bAa \\[8pt]
+    A &\to cS \\[8pt]
+    A &\to \epsilon
+  \end{align}
+
+  \begin{enumerate}[(1)]
+    \item 为该文法计算必要的\first{}集合;
+    \item 为该文法计算必要的\follow{}集合;
+    \item 为该文法设计预测分析表;
+    \item 该文法是$LL(1)$文法吗? 请说明理由。
+    \item 如果该文法是$LL(1)$文法, 请给出相应的 $LL(1)$语法分析器的伪代码
+      (可以使用递归下降实现框架, 也可以使用非递归的版本);
+      如果该文法不是$LL(1)$文法, 请将其改造成 $LL(1)$ 文法 (不必再重复各小题)。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
