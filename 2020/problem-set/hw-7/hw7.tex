@@ -1,4 +1,4 @@
-% hw6.tex
+% hw7.tex
 
 % !TEX program = xelatex
 %%%%%%%%%%%%%%%%%%%%
@@ -8,9 +8,9 @@
 
 \input{hw-preamble} % feel free to modify this file if you understand LaTeX well
 %%%%%%%%%%%%%%%%%%%%
-\title{编译原理作业 (6)}
+\title{编译原理作业 (7)}
 \me{魏恒峰}{hfwei@nju.edu.cn}{}{}
-\date{2020年12月17日}
+\date{2020年12月24日}
 %%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \maketitle
@@ -31,22 +31,19 @@
 
 %%%%%%%%%%%%%%%
 \begin{problem}[\score{10 = 5 + 5}]
-  以下文法 $G$ 描述了带可选小数部分的二进制数。
-  我们希望通过属性文法计算二进制数对应的十进制表示。
-  \begin{align*}
-    N &\to L . L \\
-    N &\to L \\
-    L &\to LB \\
-    L &\to B \\
-    B &\to 1 \\
-    B &\to 0
-  \end{align*}
-
+  考虑循环语句
+  \[
+    \forkw \;(S_{1}; B; S_{2})\; S_{3}
+  \]
   \begin{enumerate}[(1)]
-    \item 请给出一种 $S$ 属性翻译方案。
-
-      {\it 提示: $123 = (1 \times 10 + 2) \times 10 + 3$}
-    \item 请给出一种 $L$ 属性翻译方案。
+    \item 在控制流语句翻译方案(参考课件或龙书\teal{图 6-36})的基础上为 \forkw{} 语句添加语义规则;
+    \item 为以下代码片段生成中间代码
+      \begin{align*}
+        &\forkw\; (i = 0; i > 1000 \;\&\&\; i < 2000; i = i + 1) \\
+          &\qquad \ifkw\; i = 1225\; \\
+          &\qquad\qquad \printkw\; {\textsl{``Merry Christmas''}}
+      \end{align*}
+      ({\it 注: 最好用图示的方式展示产生式与相应规则的使用情况})
   \end{enumerate}
 \end{problem}
 
