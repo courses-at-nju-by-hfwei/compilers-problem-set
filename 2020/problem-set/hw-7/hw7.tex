@@ -30,17 +30,17 @@
 %%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%
-\begin{problem}[\score{10 = 5 + 5}]
+\begin{problem}[score{10 = 5 + 5}]
   考虑循环语句
   \[
     \forkw \;(S_{1}; B; S_{2})\; S_{3}
   \]
   \begin{enumerate}[(1)]
-    \item 在控制流语句翻译方案(参考课件或龙书\teal{图 6-36})的基础上为 \forkw{} 语句添加语义规则;
-    \item 为以下代码片段生成中间代码
+    \item 请在控制流语句翻译方案(参考课件或龙书\teal{图 6-36})的基础上为 \forkw{} 语句添加语义规则;
+    \item 请为以下代码片段生成中间代码
       \begin{align*}
         &\forkw\; (i = 0; i > 1000 \;\&\&\; i < 2000; i = i + 1) \\
-          &\qquad \ifkw\; i = 1225\; \\
+          &\qquad \ifkw\; i == 1225\; \\
           &\qquad\qquad \printkw\; {\textsl{``Merry Christmas''}}
       \end{align*}
       ({\it 注: 最好用图示的方式展示产生式与相应规则的使用情况})
