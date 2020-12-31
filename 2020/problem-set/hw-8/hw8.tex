@@ -1,4 +1,4 @@
-% hw7.tex
+% hw8.tex
 
 % !TEX program = xelatex
 %%%%%%%%%%%%%%%%%%%%
@@ -8,9 +8,9 @@
 
 \input{hw-preamble} % feel free to modify this file if you understand LaTeX well
 %%%%%%%%%%%%%%%%%%%%
-\title{编译原理作业 (7)}
+\title{编译原理作业 (8)}
 \me{魏恒峰}{hfwei@nju.edu.cn}{}{}
-\date{2020年12月24日}
+\date{2020年12月31日}
 %%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \maketitle
@@ -36,14 +36,14 @@
     \forkw \;(S_{1}; B; S_{2})\; S_{3}
   \]
   \begin{enumerate}[(1)]
-    \item 请在控制流语句翻译方案(参考课件或龙书\teal{图 6-36})的基础上为 \forkw{} 语句添加语义规则;
-    \item 请为以下代码片段生成中间代码
+    \item 请基于布尔表达式与控制流语句回填翻译方案为 \forkw{} 语句设计回填方案。
+    \item 请使用回填方案为以下代码片段生成中间代码
       \begin{align*}
         &\forkw\; (i = 0; i > 1000 \;\&\&\; i < 2000; i = i + 1) \\
-          &\qquad \ifkw\; i == 1225\; \\
-          &\qquad\qquad \printkw\; {\textsl{``Merry Christmas''}}
+          &\qquad \ifkw\; i == 1231\; \\
+          &\qquad\qquad \printkw\; {\textsl{``Happy New Year!''}}
       \end{align*}
-      ({\it 注: 最好用图示的方式展示产生式与相应规则的使用情况})
+      {\bf 要求:} 请使用图示(如注释语法树等)展示产生式与相应规则的使用情况。
   \end{enumerate}
 \end{problem}
 
