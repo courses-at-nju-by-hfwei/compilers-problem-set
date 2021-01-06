@@ -1,0 +1,219 @@
+% hw5.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+\usetikzlibrary{shapes.multipart,arrows,automata,positioning}
+\usepackage{multirow}
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (5)}
+\me{王腾}{171240540@smial.nju.edu.cn}{}{}
+\date{\today}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 1 + 4 + 2 + 3}]
+  给定下述文法$G$,
+  \begin{align}
+    L &\to LP \\[8pt]
+    L &\to P \\[8pt]
+    P &\to (P) \\[8pt]
+    P &\to ()
+  \end{align}
+
+  \begin{enumerate}[(1)]
+    \item 为后面的小题计算必要的\first{}集合与\follow{}集合 (可以直接转抄上次作业);
+    \item 为 $G$ 构造 $LR(1)$ 自动机;
+
+      注意: 为了尽量统一状态编号, 便于批改, 当计算\textsc{closure}时, 请按照文法编号大小顺序加入新项。
+      当计算\textsc{goto}$(I, X)$时, 请按照$I$中项的出现顺序依次考虑可能的转移符号$X$。
+      
+      要求: 给出初始状态$I_{0}$的计算方法以及\textsc{goto}($I_{0}, ($)的计算方法。
+    \item 为该文法设计$LR(1)$分析表; 该文法是$LR(1)$文法吗? 请说明理由。
+
+      要求: 请说明归约的设置条件。
+    \item 为该文法设计$LALR(1)$分析表; 该文法是$LALR(1)$文法吗? 请说明理由。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}[(1)]
+    \item \first{(L)}=\{(\}, \follow{(L)}=\{$\$,($\},\first{(P)}=\{$($\},\follow{(P)}=\{$\$,(,)$\}
+    \item  
+    \begin{itemize}
+        \item[*] 增加产生式$L'\to L$，$I_0=$\textsc{closure}(\{$[L'\to \cdot L,\$]$\})
+        \item[1] $[L'\to \cdot L,\$]$产生项：$[L\to \cdot LP,\$]$, $[L\to \cdot P,\$]$
+        \item[2] $[L\to \cdot LP,\$]$产生项：$[L\to \cdot LP,(]$, $[L\to \cdot P,(]$
+        \item[2] $[L\to \cdot P,\$]$产生项：$[P\to \cdot (P),\$]$, $[P\to \cdot (),\$]$
+        \item[3] $[L\to \cdot P,(]$产生项：$[P\to \cdot (P),(]$, $[P\to \cdot (),(]$
+        \item $I_0$=\Big\{ $[L'\to \cdot L,\$], [L\to \cdot LP,\{\$,(\}],[L\to \cdot P,\{\$,(\}],[P\to \cdot (P),\{\$,(\}],$ \\$[P\to \cdot (),\{\$,(\}]$\Big\}
+        \item \textsc{goto}($I_0,($)=\textsc{closure}(\big\{ $[P\to (\cdot P),\{\$,(\}], [P\to (\cdot),\{\$,(\}]$ \big\})
+        \item[*] LR(1)自动机：\\
+        \begin{tikzpicture}[->,>=stealth',shorten >=1pt,node distance=4cm,on grid,scale = 1, auto]
+            
+            \node (0) [ draw,rounded corners, text centered, text width=3cm, rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40}]
+                {
+                    $I_0$\\
+                    $L'\to \cdot L,\{\$\}$
+                    \nodepart{two}
+                    $L\to \cdot LP,\{\$,(\}$\\
+                    $L\to \cdot P,\{\$,(\}$\\
+                    $P\to \cdot (P),\{\$,(\}$\\
+                    $P\to \cdot (),\{\$,(\}$
+                };
+            \node (1) [right of=0,draw,rounded corners, text centered, text width=2.5cm, rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40}]
+            {
+                $I_1$\\
+                $L'\to L\cdot,\{\$\}$\\
+                $L\to L\cdot P,\{\$,(\}$
+                \nodepart{two}
+                $P\to \cdot (P),\{\$,(\}$\\
+                $P\to \cdot (),\{\$,(\}$
+            };
+            \node (2) [below of=0,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_2$\\
+                $L\to P\cdot,\{\$,(\} $
+            };
+            \node (3) [below of=1,draw,rounded corners, text centered, text width=2.5cm, rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40}]
+            {
+                $I_3$\\
+                $P\to (\cdot P),\{\$,(\} $\\
+                $P\to (\cdot ),\{\$,(\}$
+                \nodepart{two}
+                $P\to \cdot (P),\{)\}$\\
+                $P\to \cdot (),\{)\}$
+            };
+            \node (4) [right of=1,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_4$\\
+                $L\to LP\cdot,\{\$,(\} $
+            };
+            \node (5) [right of=3,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_5$\\
+                $P\to (P\cdot),\{\$,(\} $
+            };
+            \node (6) [below left of=3,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_6$\\
+                $P\to ()\cdot,\{\$,(\} $
+            };
+            \node (7) [below right of=3,xshift=1cm,yshift=-1cm, draw,rounded corners, text centered, text width=2.5cm, rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40}]
+            {
+                $I_7$\\
+                $P\to (\cdot P),\{)\} $\\
+                $P\to (\cdot ),\{)\}$
+                \nodepart{two}
+                $P\to \cdot (P),\{)\}$\\
+                $P\to \cdot (),\{)\}$
+            };
+            \node (8) [right of=5,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_8$\\
+                $P\to (P)\cdot,\{\$,(\} $
+            };
+            \node (9) [right of=7,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_9$\\
+                $P\to (P\cdot),\{)\} $
+            };
+            \node (10) [below of=7,yshift=1cm,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_{10}$\\
+                $P\to ()\cdot,\{)\} $
+            };
+            \node (11) [below of=9,yshift=1cm,draw,rounded corners, text centered, text width=2.5cm]
+            {
+                $I_{11}$\\
+                $P\to (P)\cdot,\{)\} $
+            };
+            \node (12) [above of=1,yshift=-1.5cm] {$accept$};
+
+            \path 
+                    (0) edge              node {$L$} (1)
+                    (0) edge              node {$P$} (2)
+                    (0) edge              node {$($} (3)
+                    (1) edge              node {$P$} (4)
+                    (1) edge              node {$($} (3)
+                    (1) edge              node {$\$$} (12)
+                    (3) edge              node {$P$} (5)
+                    (3) edge[above]       node {$)$} (6)
+                    (3) edge              node {$($} (7)
+                    (5) edge              node {$)$} (8)
+                    (7) edge[loop left]   node {$($} (7)
+                    (7) edge              node {$P$} (9)
+                    (7) edge              node {$)$} (10)
+                    (9) edge              node {$)$} (11);
+
+        \end{tikzpicture}
+    \end{itemize}
+    \item 按$X\to \gamma$, \textsc{sym}规约时,当前分析的非终结符号$a$要满足：$a\in$ \textsc{sym}\\
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+                                                   & \multicolumn{3}{c|}{ACTION} & \multicolumn{2}{c|}{GOTO} \\ \hline 
+                                                   & (       & )       & \$       & L           & P           \\ \hline
+        0                                          & s3      &         &         & g1          & g2          \\ \hline
+        1                                          & s3      &         & accept     &             & g4          \\ \hline
+        2                                          & r2      &         & r2      &             &             \\ \hline
+        3                                          & s7      & s6      &         &             & g5          \\ \hline
+        4                                          & r1      &         & r1      &             &             \\ \hline
+        5                                          &         & s8      &         &             &             \\ \hline
+        6                                          & r4      &         & r4      &             &             \\ \hline
+        7                                          & s7      & s10     &         &             & g9          \\ \hline
+        8                                          & r3      &         & r3      &             &             \\ \hline
+        9                                          &         & s11     &         &             &             \\ \hline
+        10                                         &         & r4      &         &             &             \\ \hline
+        11                                         &         & r3      &         &             &             \\ \hline
+        \end{tabular}\\
+        该文法是$LR(1)$文法，因为$LR(1)$预测分析表没有冲突
+    \item LALR(1)预测分析表：\\
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+            & \multicolumn{3}{c|}{ACTION} & \multicolumn{2}{c|}{GOTO} \\ \hline
+            & (      & )       & \$        & L           & P           \\ \hline
+        0   & s37    &         &          & g1          & g2          \\ \hline
+        1   & s37     &         & accept   &             & g4          \\ \hline
+        2   & r2     &         & r2       &             &             \\ \hline
+        37  & s37    & s610    &          &             & g59         \\ \hline
+        4   & r1     &         & r1       &             &             \\ \hline
+        59  &        & s811    &          &             &             \\ \hline
+        610 & r4     & r4      & r4       &             &             \\ \hline
+        811 & r3     & r3      & r3       &             &             \\ \hline
+        \end{tabular}\\
+        该文法是LALR(1)文法，因为LALR(1)预测分析表无冲突
+\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
