@@ -1,0 +1,72 @@
+% hw8.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (8)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{2020年12月31日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 5 + 5}]
+  考虑循环语句
+  \[
+    \forkw \;(S_{1}; B; S_{2})\; S_{3}
+  \]
+  \begin{enumerate}[(1)]
+    \item 请基于布尔表达式与控制流语句回填翻译方案为 \forkw{} 语句设计回填方案。
+    \item 请使用回填方案为以下代码片段生成中间代码
+      \begin{align*}
+        &\forkw\; (i = 0; i > 1000 \;\&\&\; i < 2000; i = i + 1) \\
+          &\qquad \ifkw\; i == 1231\; \\
+          &\qquad\qquad \printkw\; {\textsl{``Happy New Year!''}}
+      \end{align*}
+      {\bf 要求:} 请使用图示(如注释语法树等)展示产生式与相应规则的使用情况。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
