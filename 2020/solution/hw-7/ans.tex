@@ -9,6 +9,7 @@
 \input{hw-preamble} % feel free to modify this file if you understand LaTeX well
 \usetikzlibrary{shapes.multipart,arrows,automata,positioning}
 \newcommand*{\h}{\hspace{15pt}}
+\newcommand*{\hg}{\hspace{35pt}}
 %%%%%%%%%%%%%%%%%%%%
 \title{编译原理作业 (7)}
 \me{王腾}{171240540@smail.nju.edu.cn}{}{}
@@ -56,9 +57,24 @@
     \begin{tabular}{|l|l|}
         \hline
         \multicolumn{1}{|c|}{产生式}    & \multicolumn{1}{c|}{语义规则}                                                                                                                                                                                                                                            \\ \hline
-        $S\to$ for($S_1;B;S_2$) $S_3$ & \begin{tabular}[c]{@{}l@{}}$S_1.next=newlabel()$\\ $B.true=newlabel()$\\ $B.false=S.next$\\ $S_3.next=newlabel()$\\ $S2.next=S_1.next$\\ $S.code=S_1.code$ || $label(S_1.next)$\\ || $B.code$ || $label(B.true)$ || $S_3.code$ \\ || $label(S_3.next)$ || $S_2.code$\\ || $gen$('goto',$S_1.next$)\end{tabular} \\ \hline
+        $S\to$ \forkw\;($S_1;B;S_2$) $S_3$ 
+        & \begin{tabular}[c]{@{}l@{}}
+          $S_1.next=newlabel()$\\ 
+          $B.true=newlabel()$\\ 
+          $B.false=S.next$\\ 
+          $S_3.next=newlabel()$\\ 
+          $S_2.next=S_1.next$\\ 
+          $S.code=S_1.code$ \\ 
+          || $label(S_1.next)$ || $B.code$ \\
+          || $label(S_3.next)$ || $S_2.code$\\
+          || $gen$('goto',$S_1.next$)\\ 
+          || $label(B.true)$ || $S_3.code$\\
+          || $gen$('goto',$S_3.next$)
+        \end{tabular} \\ 
+        \hline
         \end{tabular}
-    \item 
+    \item $L_i$为标号，假设$S$按顺序产生$L_1(S_1.next),L_2(B.true),L_3(S_3.next)$；\\
+    $B$产生$L_4$；$S_3$产生$L_5$。\\
     \begin{tikzpicture}[ %可选参数设置此图的属性
         ->, % 有向图
         >=stealth', %箭头末端加粗
@@ -70,28 +86,32 @@
       ]
       \tikzstyle{every state}=[fill={rgb:black,1;white,10}] %每个节点填充颜色
       %% node
-    %   \draw [help lines] (0,0) grid (9,9); % 显示辅助格点位置
+      % \draw [help lines] (0,0) grid (9,9); % 显示辅助格点位置
       \node[anchor=north west,yshift=6cm] (0) {
         \begin{tabular}{|l|l|}
             \hline
-            $S_1.next=newlabel()$\\ $B.true=newlabel()$\\ $B.false=S.next$\\ $S_3.next=newlabel()$\\ $S2.next=S_1.next$\\ \hline
+            $S_1.next=newlabel()$\\ $B.true=newlabel()$\\ $B.false=S.next$\\ $S_3.next=newlabel()$\\ $S_2.next=S_1.next$\\ \hline
         \end{tabular}
       };% table
       \node[anchor=north west,xshift=7cm, yshift=9cm] (1) {
-        \begin{tabular}{|l|l|}
-            \hline
-                                                                       & \begin{tabular}[c]{@{}l@{}}$S_1.code$\\ \h i=0;\end{tabular}                                                                         \\ \hline
-            \begin{tabular}[c]{@{}l@{}} $L_1$:\\ \\ $L_4$:\end{tabular} & \begin{tabular}[c]{@{}l@{}}$B.code$\\ \h if i>1000 goto $L_4$\\ \h goto $L_x$\\ \h if i<2000 goto $L_2$\\ \h goto $L_x$\end{tabular} \\ \hline
-            \begin{tabular}[c]{@{}l@{}}\\ $L_2$:\\ \\ $L_5$:\end{tabular} & \begin{tabular}[c]{@{}l@{}}$S_3.code$\\ \h if i==1225 goto $L_5$\\ \h goto $L_3$\\ \h print “Merry Christmas”\end{tabular}           \\ \hline
-            $L_3:$                                                     & \begin{tabular}[c]{@{}l@{}}$S_2.code$\\ \h i=i+1\\ \h goto $L_1$\end{tabular}                                                        \\ \hline
-            $L_x$:                                                     &                                                                                                                                      \\ \hline
-            \end{tabular}
+        \begin{tabular}{|l|}
+          \hline
+          \begin{tabular}[c]{@{}l@{}}$S_1.code$\\   \hg i=0\end{tabular}                                                                                                   \\ \hline
+          \begin{tabular}[c]{@{}l@{}}$B.code$\\   \h $L_1$:\; if i>1000 goto $L_4$\\   \hg goto $L_x$\\   \h $L_4$:\; if i<2000 goto $L_2$\\   \hg goto $L_x$\end{tabular} \\ \hline
+          \begin{tabular}[c]{@{}l@{}}$S_2.code$\\   \h $L_3$:\; i=i+1\end{tabular}                                                                                         \\ \hline
+          \begin{tabular}[c]{@{}l@{}}$gen()$\\   \hg goto $L_1$\end{tabular}                                                                                               \\ \hline
+          \begin{tabular}[c]{@{}l@{}}$S_3.code$\\   \h $L_2$:\; if i==1225 goto $L_5$\\   \hg goto $L_3$\\   \h $L_5$: print "Merry Christmas"\end{tabular}                      \\ \hline
+          \begin{tabular}[c]{@{}l@{}}$gen()$\\   \hg goto $L_3$\end{tabular}                                                                                               \\ \hline
+          \h $L_x$:                                                                                                                                                        \\ \hline
+          \end{tabular}
       };% table
       %% path
     % \path (0,0) -- (2,0)
     \draw (3.7,5.6) -> (7,7) ; 
-    \draw (3.7,5.22) -> (7,4.6) ; 
-    \draw (3.7,4.2) -> (7,2.8) ; 
+    \draw (3.7,5.22) ->  (7,2.8); 
+    \draw (3.7,4.2) -> (7,4.6) ; 
+    \draw[red] (3.7,4.7) ->  (7,5.7); 
+    \draw[red] (3.7,4.7) ->  (7,6.7); 
 \end{tikzpicture}
       
         
