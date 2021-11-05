@@ -1,0 +1,92 @@
+% hw6.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (6)}
+\me{王腾}{171240540@smail.nju.edu.cn}{}{}
+\date{\today}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 5 + 5}]
+  以下文法 $G$ 描述了带可选小数部分的二进制数。
+  我们希望通过属性文法计算二进制数对应的十进制表示。
+  \begin{align*}
+    N &\to L . L \\
+    N &\to L \\
+    L &\to LB \\
+    L &\to B \\
+    B &\to 1 \\
+    B &\to 0
+  \end{align*}
+
+  \begin{enumerate}[(1)]
+    \item 请给出一种 $S$ 属性翻译方案。
+
+      {\it 提示: $123 = (1 \times 10 + 2) \times 10 + 3$}
+    \item 请给出一种 $L$ 属性翻译方案。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+ \begin{enumerate}[(1)]
+    \item $w$表示二进制串宽度\\
+        \begin{tabular}{|l|}
+          \hline
+          $N\to L_1 . L_2 \{N.val=L_1.val+2^{-L_2.w}*L_2.val\}$ \\ \hline
+          $N\to L\{N.val=L.val\}$                               \\ \hline
+          $L\to L_1B\{L.w=L_1.w+1,L.val=L_1.val*2+B.val\}$      \\ \hline
+          $L\to B\{L.w=1,L.val=B.val\}$                         \\ \hline
+          $B\to 1\{B.val=1\}$                                   \\ \hline
+          $B\to 0\{B.val=0\}$                                   \\ \hline
+          \end{tabular}
+    \item $L.val$的值由$B.val$获得，$L.int=true$表示$L$是整数部分，
+        $L.w$表示$L$的二进制数宽度，$B.inhVal$表示$B$左边的串的二进制整数值，
+        $B.inhW$表示$B$左边的二进制位数\\
+    \begin{tabular}{|l|}
+      \hline
+      $N\to\{L_1.int=true\}L_1.\{L_2.int=false\}L_2\{N.val=L_1.val+L_2.val\}$                                                                             \\ \hline
+      $N\to\{L.int=true\}L\{N.val=L.val\}$                                                                                                                \\ \hline
+      \begin{tabular}[c]{@{}l@{}}$L\to\{L_1.int=L.int\}L_1\{B.inhVal=L_1.val,B.inhW=L_1.w,B.inhInt=L.int\}$\\ \hspace{1cm} $B\{L.w=L_1.w+1,L.val=B.val\}$\end{tabular} \\ \hline
+      $L\to\{B.inhVal=0,B.inhW=0,B.inhInt=L.int\}B\{L.w=1,L.val=B.val\}$                                                                                  \\ \hline
+      \begin{tabular}[c]{@{}l@{}}$B\to 1$ \{ \textbf{if } $B.inhInt==true$ \\ \hspace{1.4cm}\textbf{then }$B.val=B.inhVal*2+1$\\ \hspace{1.4cm}\textbf{else } $B.val = B.inhVal+2^{-B.inhW-1}\}$\end{tabular}           \\ \hline
+      \begin{tabular}[c]{@{}l@{}}$B\to 0$ \{ \textbf{if } $B.inhInt==true$ \\ \hspace{1.4cm}\textbf{then }$B.val=B.inhVal*2$\\ \hspace{1.4cm}\textbf{else } $B.val = B.inhVal\}$\end{tabular}           \\ \hline
+      \end{tabular}
+      
+      
+    \end{enumerate} 
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+%%%%%%%%%%%%%%%%%%%%
+\end{document}

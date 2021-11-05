@@ -1,0 +1,129 @@
+% hw8.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+\usetikzlibrary{shapes.multipart,arrows,automata,positioning}
+\newcommand*{\h}{\hspace{15pt}}
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (8)}
+\me{王腾}{171240540@smail.nju.edu.cn}{}{}
+\date{\today}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 5 + 5}]
+  考虑循环语句
+  \[
+    \forkw \;(S_{1}; B; S_{2})\; S_{3}
+  \]
+  \begin{enumerate}[(1)]
+    \item 请基于布尔表达式与控制流语句回填翻译方案为 \forkw{} 语句设计回填方案。
+    \item 请使用回填方案为以下代码片段生成中间代码
+      \begin{align*}
+        &\forkw\; (i = 0; i > 1000 \;\&\&\; i < 2000; i = i + 1) \\
+          &\qquad \ifkw\; i == 1231\; \\
+          &\qquad\qquad \printkw\; {\textsl{``Happy New Year!''}}
+      \end{align*}
+      {\bf 要求:} 请使用图示(如注释语法树等)展示产生式与相应规则的使用情况。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+
+\begin{enumerate}[(1)]
+    \item 回填翻译方案\\
+    \\ 为文法引入非终结符：$S\to\forkw\;(S_1\;M_1; B;M_2\;S_2)M_3\;N\;M_4\; S_3$\\ 
+    \begin{tabular}{|l|l|}
+        \hline
+        产生式                                                   & 回填方案                                                                                                                                                                                                                                                                                   \\ \hline
+        $S\to\forkw\;(S_1\;M_1; B;M_2\;S_2)M_3\;N\;M_4\; S_3$ & \begin{tabular}[c]{@{}l@{}}$backpatch(S_1.nextlist,M_1.instr)$\\ $backpatch(S_2.nextlist,M_3.instr)$\\ $backpatch(S_3.nextlist,M_2.instr)$\\ $backpatch(B.truelist,M_4.instr)$\\ $backpatch(N.nextlist,M_1.instr)$\\ $S.nextlist=B.falselist$\\ $gen('goto'\; M_2.instr)$\end{tabular} \\ \hline
+        $M\to \epsilon$                                       & $M.instr=nextinstr$                                                                                                                                                                                                                                                                    \\ \hline
+        $N\to \epsilon$                                       & \begin{tabular}[c]{@{}l@{}}$N.nextlist=makelist(nextinstr)$\\ $gen('goto'\; - \;)$\end{tabular}                                                                                                                                                                                        \\ \hline
+        \end{tabular}
+        \item 省略了树状图，$S_1.nextlist$与$S_2.nextlist$在此例中没有用到\\
+        $M_1.instr=102,M_2.instr=106,M_3.instr=107,M_4.instr=108$\\
+        $S_3.nextlist=\{109\},N.nextlist=\{107\}$\\
+        $B.truelist=\{104\},S.nextlist=B.falselist=\{103,105\}$\\
+    \begin{tikzpicture}[ %可选参数设置此图的属性
+        ->, % 有向图
+        >=stealth', %箭头末端加粗
+        shorten >=1pt, % 箭头末端'>'距终点的距离
+        node distance=2cm, % node间最小距离
+        on grid, % node中心在网格点上
+        scale = 1, %设置网格宽度
+        auto % 自动计算位置
+      ]
+      \tikzstyle{every state}=[fill={rgb:black,1;white,10}] %每个节点填充颜色
+      %% node
+    %    \draw [help lines] (0,0) grid (9,9); % 显示辅助格点位置
+      \node[anchor=north west,yshift=6cm] (0) {
+        \begin{tabular}{|l|}
+            \hline
+            \begin{tabular}[c]{@{}l@{}}$backpatch(S_1.nextlist,M_1.instr)$\\ $backpatch(S_2.nextlist,M_3.instr)$\\ $backpatch(S_3.nextlist,M_2.instr)$\\ $backpatch(B.truelist,M_4.instr)$\\ $backpatch(N.nextlist,M_1.instr)$\\ $S.nextlist=B.falselist$\\ $gen('goto'\; M_2.instr)$\end{tabular} \\ \hline
+            \end{tabular}
+      };% table
+      \node[anchor=north west,xshift=8cm, yshift=9cm] (1) {
+        \begin{tabular}{|l|}
+            \hline
+            \begin{tabular}[c]{@{}l@{}}$S_1.code$\\   \h 101:\; i=0\end{tabular}                                                                                        \\ \hline
+            \begin{tabular}[c]{@{}l@{}}$B.code$\\   \h 102:\; if i>1000 goto 104\\   \h 103:\; goto -\\   \h 104:\; if i<2000 goto 108\\   \h 105:\; goto -\end{tabular} \\ \hline
+            \begin{tabular}[c]{@{}l@{}}$S_2.code$\\   \h 106:\; i=i+1\end{tabular}                                                                                       \\ \hline
+            \begin{tabular}[c]{@{}l@{}}$N$\\   \h 107:\; goto 102\end{tabular}                                                                                           \\ \hline
+            \begin{tabular}[c]{@{}l@{}}$S_3.code$\\   \h 108:\; if i==1231 goto 110\\   \h 109:\; goto 106\\   \h 110:\; print "Merry Christmas"\end{tabular}            \\ \hline
+            \h 111:\; goto 106                                                                                                                                           \\ \hline
+            \end{tabular}
+      };% table
+      %% path
+    % \path (0,0) -- (2,0)
+    \draw (5.5,4.6) -> (8.6,2.2) ; 
+    \draw (5.5,4.2) -> (8.6,6.1) ; 
+    \draw (5.5,3.7) -> (8.6,3.7) ; 
+    \draw (3.7,2.7) -> (8.6,1.2) ; 
+    \draw[red] (5.5,3.2) -> (8.6,6.7) ; 
+    \draw[red] (5.5,3.2) -> (8.6,5.7) ; 
+\end{tikzpicture}
+\end{enumerate}
+
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}

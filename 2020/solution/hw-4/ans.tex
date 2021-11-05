@@ -1,0 +1,213 @@
+% hw4.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+\usetikzlibrary{shapes.multipart,arrows,automata,positioning}
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (4)}
+\me{王腾}{171240540@smail.nju.edu.cn}{}{}
+\date{\today}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 1 + 2 + 2 + 3 + 2}]
+  给定下述文法$G$,
+  \begin{align}
+    L &\to LP \\[8pt]
+    L &\to P \\[8pt]
+    P &\to (P) \\[8pt]
+    P &\to ()
+  \end{align}
+
+  \begin{enumerate}[(1)]
+    \item 简述$G$所对应的语言;
+    \item 为 $G$ 构造 $LR(0)$ 自动机;
+
+      注意: 为了尽量统一状态编号, 便于批改, 当计算\textsc{closure}时, 请按照文法编号大小顺序加入新项。
+      当计算\textsc{goto}$(I, X)$时, 请按照$I$中项的出现顺序依次考虑可能的转移符号$X$。
+
+      要求: 给出初始状态$I_{0}$的计算方法以及\textsc{goto}($I_{0}, ($)的计算方法。
+    \item 为该文法设计$LR(0)$分析表; 该文法是$LR(0)$文法吗? 请说明理由。
+    \item 为该文法设计$SLR(1)$分析表; 该文法是$SLR(1)$文法吗? 请说明理由。
+
+      要求: 请说明归约的设置条件。
+    \item 如果该文法是$SLR(1)$文法, 请给出识别输入串$(())()$时自动机所经历的状态(编号)。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+(1) 所有类似$((\dots))$的小括号串的串行组合，不包括$(()())$这种类型\\
+(2) 增加产生式$L'\to L$\\
+  1. 计算$I_0$：\\
+    \indent 初始：$I_0=$\textsc{closure}$(\{[L'\to \cdot L]\})$\\
+    \indent $[L'\to \cdot L]$应用(1)(2)：$I_0=\{[L'\to \cdot L],[L\to \cdot LP],[L\to \cdot P]\}$\\
+    \indent $[L'\to \cdot P]$应用(3)(4)：\\
+    \indent\indent $I_0$=\{ [$L'\to \cdot L$], [$L\to \cdot LP$], [$L\to \cdot P$],[$P\to \cdot (P)$], [$P\to \cdot ()$] \}\\
+    \indent 无法再添加项，完毕。\\    
+  2. 计算\textsc{goto}($I_{0}, ($ )\\
+    \indent 1. $I_0$中含$\cdot ($的项集:\{ [$P\to \cdot (P)$], [$P\to \cdot ()$] \}\\
+    \indent 2. 计算\textsc{closure}(\{ [$P\to (\cdot P)$], [$P\to (\cdot )$] \})，与$I_0$计算方法相同\\
+    \indent 3. \textsc{goto}($I_{0}, ($ )= \{ [$P\to (\cdot P)$], [$P\to (\cdot )$], [$P\to \cdot (P)$], [$P\to \cdot ()$] \}\\
+  3. $LR(0)$状态机\\
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,node distance=4cm,on grid,scale = 1, auto]
+    %% node
+    % \draw [help lines] (0,0) grid (10,10); % 显示辅助格点位置
+    \node (0) [draw,rounded corners, text centered, text width=2cm, 
+    rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40} %Multi-part
+        %anchor=north west, % node的锚点坐标，west为左边中央
+      ]{
+        $I_0$\\
+        $L'\to \cdot L$
+        \nodepart{two}
+        $L\to \cdot LP$\\
+        $L\to \cdot P$\\
+        $P\to \cdot (P)$\\
+        $P\to \cdot ()$
+      }; % multi-part
+    \node (1) [ right of=0,draw,rounded corners, text centered, text width=2cm, rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40}]
+      {
+        $I_1$\\
+        $L'\to L \cdot$\\
+        $L \to L \cdot P$
+        \nodepart{two}
+        $P\to \cdot (P)$\\
+        $P\to \cdot ()$
+      };
+    \node (2) [below of=0,draw,rounded corners, text centered, text width=2cm]
+      {
+        $I_2$\\
+        $L\to P \cdot$
+      };  
+    \node (3) [below  of=1,draw,rounded corners, text centered, text width=2cm, rectangle split, rectangle split parts=2,rectangle split part fill={white,gray!40}]
+      {
+        $I_3$\\
+        $P\to ( \cdot P)$
+        $L\to ( \cdot)$
+        \nodepart{two}
+        $P\to \cdot (P)$\\
+        $P\to \cdot ()$
+      };  
+    \node (4) [right of=1,draw,rounded corners, text centered, text width=2cm]
+      {
+        $I_4$\\
+        $L\to LP \cdot$
+      };  
+    \node (5) [right of=3,draw,rounded corners, text centered, text width=2cm]
+      {
+        $I_5$\\
+        $P\to (P \cdot)$
+      };   
+    \node (6) [below of=3,draw,rounded corners, text centered, text width=2cm]
+      {
+        $I_6$\\
+        $P\to ()\cdot$
+      };   
+    \node (7) [below of=5, draw,rounded corners, text centered, text width=2cm]
+      {
+        $I_7$\\
+        $P\to (P)\cdot$
+      };
+    \node (8) [above of=1,yshift=-1.5cm]
+      {
+        $accept$
+      };
+    %% path
+    \path (0) edge              node {$L$} (1)
+      (0) edge              node {$P$} (2)
+      (0) edge              node {$($} (3)
+      (1) edge              node {$P$} (4)
+      (1) edge              node {$($} (3)
+      (3) edge              node {$P$} (5)
+      (3) edge[loop left,right]   node {$($} (3)
+      (3) edge              node {$)$} (6)
+      (5) edge              node {$)$} (7)
+      (1) edge              node {\$} (8);
+    \end{tikzpicture} 
+
+(3) \\
+\indent\indent
+\begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+                           & \multicolumn{3}{c|}{ACTION}        & \multicolumn{2}{c|}{GOTO} \\ \hline
+                           & (                       & )  & \$   & L           & P           \\ \hline
+  0                        & \multicolumn{1}{r|}{s3} &    &     & g1          & g2          \\ \hline
+  1                        & s3                      &    & accept &             & g4          \\ \hline
+  2                        & r2                      & r2 & r2  &             &             \\ \hline
+  3                        & s3                      & s6 &     &             & g5          \\ \hline
+  4                        & r1                      & r1 & r1  &             &             \\ \hline
+  5                        &                         & s7 &     &             &             \\ \hline
+  6                        & r4                      & r4 & r4  &             &             \\ \hline
+  7                        & r3                      & r3 & r3  &             &             \\ \hline
+  \end{tabular}
+  \\
+  \indent\indent 该文法是$LR(0)$文法，因为$LR(0)$分析表没有冲突\\ 
+(4) \\
+\indent\indent
+\begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+                           & \multicolumn{3}{c|}{ACTION}        & \multicolumn{2}{c|}{GOTO} \\ \hline
+                           & (                       & )  & \$   & L           & P           \\ \hline
+  0                        & s3                      &    &     & g1          & g2          \\ \hline
+  1                        & s3                      &    & accept &             & g4          \\ \hline
+  2                        & r2                      &  & r2  &             &             \\ \hline
+  3                        & s3                      & s6 &     &             & g5          \\ \hline
+  4                        & r1                      &  & r1  &             &             \\ \hline
+  5                        &                         & s7 &     &             &             \\ \hline
+  6                        & r4                      & r4 & r4  &             &             \\ \hline
+  7                        & r3                      & r3 & r3  &             &             \\ \hline
+  \end{tabular}
+  \\ \\
+  \indent\indent \follow(L)=\{$(,\$ $\}, \follow(P)=\{$(,),\$ $\}\\
+  \indent\indent 说明：按$X\to \gamma$规约时,当前分析的非终结符号$a$要满足：$a\in$\follow(X)\\
+  \indent\indent 该文法是$SLR(1)$文法，因为$SLR(1)$分析表没有冲突\\ 
+(4) \\
+\indent 初始状态：0\\
+\indent \textsc{PATH}:$0\to 3\to 3\to 6\to 5\to 7 \to 2\to 1\to 3 \to 6\to 4 \to 1\to accept$\\
+\indent 用栈表示：$
+  0\stackrel{\text{移入(}}{\longrightarrow} 03
+  \stackrel{\text{移入(}}{\longrightarrow}  033
+  \stackrel{\text{移入)}}{\longrightarrow}  0336
+  \stackrel{\text{按4规约}}{\longrightarrow}  035
+  \stackrel{\text{移入)}}{\longrightarrow}  0357
+  \stackrel{\text{按3规约}}{\longrightarrow}  02
+  \stackrel{\text{按2规约}}{\longrightarrow}  01
+  \stackrel{\text{移入(}}{\longrightarrow}  013
+  \stackrel{\text{移入)}}{\longrightarrow}  0136
+  \stackrel{\text{按4规约}}{\longrightarrow}  014
+  \stackrel{\text{按1规约}}{\longrightarrow}  01
+  \to accept
+  $
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
