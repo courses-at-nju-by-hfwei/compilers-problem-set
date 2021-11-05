@@ -1,0 +1,95 @@
+% hw1.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (1)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{\zhtoday}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+\begin{problem}[计算机基础 \score{2}]
+  观看系列视频 \href{https://www.bilibili.com/video/BV1EW411u7th?}{Crash Course Computer Science@bilibili}:
+  \begin{itemize}
+    \item $P5 \sim P8$; 总时长约45分钟
+    \item 目的: 了解机器语言是如何跑起来的
+    \item {\bf 作业:} 随便写点什么吧 (要能表明你确实学习了这些视频)
+  \end{itemize}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[手写词法分析器 \score{5}]
+  根据下面的状态转移图以及课上介绍的识别方法, 给出识别数字
+  (正整数、不带科学计数法的浮点数以及带科学计数法的浮点数)的伪代码。
+  (推荐使用 \LaTeX{}
+  \href{http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf}{\texttt{algorithmicx} 包}
+  书写伪代码)
+
+  \fig{width = 0.80\textwidth}{figs/number}
+
+  例如, 对于输入串 \texttt{1.23E+a4.5E6b78.c},
+  应该识别出 \texttt{1.23}, \texttt{4.5E6}, \texttt{78},
+  并且其余字符均应被视为神秘的未知字符。
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[正则表达式 \score{3}]
+  课堂上, 我们提到了下面的正则表达式可以用于识别所有(二进制表示的)3的倍数。
+  请证明该结论(或给出直观的解释)。
+  参考: \teal{\url{https://regex101.com/r/ED4qgC/1}}
+  \[
+    \Big(0|\big(1(01^{\ast}0)^{\ast}1\big)\Big)^{\ast}
+  \]
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
