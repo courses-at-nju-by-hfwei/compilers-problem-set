@@ -1,0 +1,89 @@
+% hw2.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (2)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{2021年11月12日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[子集构造法的最坏情况 \score{10}]
+　请给出识别如下语言的 NFA (以 $n = 3$ 为例),
+　并使用子集构造法得到等价的 DFA:
+  ``长度为 $m \ge n$ 个字符的 $a, b$ 串, 且倒数第 $n$ 个字符是 $a$''。
+\end{problem}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[正则表达式与自动机 \score{10 = 2 + 2 + 2 + 2 + 2}]
+  考虑正则表达式 $r = a(b|c)^{\ast}$。
+  \sidenote{
+    如何用 \LaTeX{} 写(复杂的)正则表达式?
+    \begin{itemize}
+      \item \href{https://tex.stackexchange.com/a/162122/23098}{How to escape properly and output regex in latex?@tex.stackexchange}
+    \end{itemize}
+  }
+  \begin{enumerate}[(1)]
+    \item 使用 Thompson 构造法构造等价的 NFA; \sidenote{
+      如何用 \LaTeX{} 画自动机?
+      \begin{itemize}
+        \item \href{https://www3.nd.edu/~kogge/courses/cse30151-fa17/Public/other/tikz\_tutorial.pdf}{使用{\texttt{tikz automata}} library}
+        \item \href{https://hayesall.com/blog/latex-automata/}{另一个关于\texttt{tikz automata}的教程}
+        \item 在\href{https://notendur.hi.is/aee11/automataLatexGen/}{网站\texttt{automataLatexGen}生成\LaTeX{}代码}
+      \end{itemize}}
+    \item 使用子集构造法构造等价的 DFA;
+    \item 将上一步构造的 DFA 最小化;
+    \item 将上一步得到的最小 DFA 转化为等价的正则表达式, 记为 $r'$ (下周二会介绍该算法)。
+  \end{enumerate}
+  以上各小题, 请给出关键的中间步骤。
+
+  \noindent (不必给出所有的细节, 类似的步骤可以``跳步''; 尽量将解答部分控制在两页以内。)
+
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
