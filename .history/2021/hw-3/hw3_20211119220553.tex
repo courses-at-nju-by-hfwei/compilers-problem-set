@@ -1,0 +1,82 @@
+% hw3.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (3)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{2021年11月19日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10 = 4 + 4 + 2}]
+  考虑上下文无关文法:
+  \[
+    S \to S S + \mid S S \ast \mid a
+  \]
+  以及串 $a a + a \ast$。
+
+  \begin{enumerate}[(1)]
+    \item 请给出该串的一棵语法分析树~\footnote{如何使用 \href{https://mirrors.hit.edu.cn/CTAN/graphics/pgf/contrib/tikz-qtree/tikz-qtree-manual.pdf}{\texttt{tikz-qtree}} 画语法分析树。}。
+    \item 该文法是否是二义性文法? 请证明你的结论。
+    \item 请描述该文法生成的语言~\footnote{你可以使用 \texttt{jflap v8.0 (beta)} 中的 ``Input|Generate Language'' 自动枚举若干句子, 然后观察规律}。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{10}]
+  请消除下列文法的左递归:
+  \begin{align*}
+    S &\to Sa \mid Tbc \mid Td \\[8pt]
+    T &\to Se \mid gh
+  \end{align*}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
