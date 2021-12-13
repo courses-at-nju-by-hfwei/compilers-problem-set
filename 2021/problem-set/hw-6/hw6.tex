@@ -31,13 +31,16 @@
 
 %%%%%%%%%%%%%%%
 \begin{problem}[\score{20 = 10 + 10}]
-  考虑如下文法 $G$, 它定义了一种二叉树结构, 其中每个内部节点(非 \text{\bf nil} 节点)包含一个数字:
+  考虑如下文法 $G$, 它定义了一种二叉树结构,
+  其中每个内部节点(非 \text{\bf nil} 节点)包含一个数字与左右两个子树:
   \begin{align*}
-    T &\to \text{\bf nil} \sep (T, V, T) \\
-    V &\to D \sep V D \\
-    D &\to 0 \sep 1 \sep 2 \sep 3 \sep 4 \sep 5 \sep 6 \sep 7 \sep 8 \sep 9
+    T &\to \text{\bf nil} \sep (T \;\intkw\; T) \\
+    % V &\to D \sep V D \\
+    % D &\to 0 \sep 1 \sep 2 \sep 3 \sep 4 \sep 5 \sep 6 \sep 7 \sep 8 \sep 9
   \end{align*}
-  请设计语法制导的{\bf 翻译方案}, 完成下列任务。
+  其中, \intkw{} 是词法单元。
+
+  \noindent 请设计语法制导的{\bf 翻译方案}, 完成下列任务。
   你需要自行定义合适的属性。
   \begin{enumerate}[(1)]
     \item 判断一个二叉树是否是平衡的。
