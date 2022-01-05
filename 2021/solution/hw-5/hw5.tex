@@ -1,0 +1,162 @@
+% hw5.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (5)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{2021年12月03日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{20 = 4 + 8 + 4 + 4}]
+  给定下述文法$G$,
+  \begin{align}
+    B &\to AB \\[8pt]
+    B &\to b \\[8pt]
+    A &\to BA \\[8pt]
+    A &\to a
+  \end{align}
+
+  \begin{enumerate}[(1)]
+    \item 为后面的小题计算必要的\first{}集合与\follow{}集合;
+    \item 为 $G$ 构造 $LR(1)$ 自动机;
+
+      注意: 为了尽量统一状态编号, 便于批改, 当计算\textsc{closure}时, 请按照文法编号大小顺序加入新项。
+      当计算\textsc{goto}$(I, X)$时, 请按照$I$中项的出现顺序依次考虑可能的转移符号$X$。
+
+      要求: 给出初始状态$I_{0}$的计算方法以及\textsc{goto}($I_{0}, A$)的计算方法。
+    \item 为该文法设计$LR(1)$分析表; 该文法是$LR(1)$文法吗? 请说明理由。
+
+      要求: 请说明归约的设置条件。
+    \item 为该文法设计$LALR(1)$分析表; 该文法是$LALR(1)$文法吗? 请说明理由。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}[(1)]
+    \item \first{(A)} = \{a,b\}, \first{(B)} = \{a,b\}\\
+    \follow{(A)} = \{a,b\}, \follow{(B)} = \{a,b,\$\}
+    \item 增广文法\\
+    \begin{align*}
+    B' &\to B \\[8pt]
+    B &\to AB \\[8pt]
+    B &\to b \\[8pt]
+    A &\to BA \\[8pt]
+    A &\to a
+  \end{align*}
+  计算初始状态$I_0$:
+  \begin{itemize}
+      \item $I_0$=\textsc{colsure}$(\{[B'\to \cdot B,\$]\})$
+      \item $[B'\to B, \$]$推导出$[B\to\cdot AB,\$]$和$[B\to\cdot b,\$]$
+      \item $[B\to\cdot AB, \$]$推导出$[A\to\cdot BA,a/b]$和$[A\to\cdot a, a/b]$
+      \item $[A\to\cdot BA,a/b]$推导出$[B\to\cdot AB, a/b]$和$[B\to\cdot b,a/b]$
+  \end{itemize}
+  得到初始状态$I_0=\{[B'\to\cdot B,\$],[B\to\cdot AB,\$/a/b],[B\to\cdot b,\$/a/b],[A\to\cdot BA,a/b],[A\to\cdot a,a/b]\}$\\\\
+  计算\textsc{goto}($I_0,A$):
+  \begin{itemize}
+      \item 将$[B\to A\cdot B,\$/a/b]$加入新的闭包集合并计算闭包
+      \item $[B\to A\cdot B,\$/a/b]$推导出$[B\to\cdot AB,\$/a/b]$和$[B\to \cdot b,\$/a/b]$
+      \item $[B\to \cdot AB,\$/a/b]$推导出$[A\to\cdot BA,a/b]$和$[A\to\cdot a,a/b]$
+  \end{itemize}
+  得到\textsc{goto}($I_0,A$)=$\{[B\to A\cdot B,\$/a/b],[B\to\cdot AB,\$/a/b],[B\to \cdot b,\$/a/b],[A\to\cdot BA,a/b],[A\to\cdot a,a/b]\}$\\\\
+  构造$LR(1)$自动机如图\ref{fig:my_label}
+  \begin{figure}
+      \centering
+      \includegraphics[scale=0.4]{fig/lr1.png}
+      \caption{$LR(1)$自动机}
+      \label{fig:my_label}
+  \end{figure}
+  \item 给出$LR(1)$分析表如表\ref{table:lr}。\\
+  对于项集$I_i$，如果$[A\to \alpha, a]$在项集中，那么\textsc{ACTION}$[i,a]$按照$A\to\alpha$规约。
+  不是$LR(1)$文法，因为预测分析表有冲突。
+  \begin{table}[!htbp]
+    \centering
+    \begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}}
+        \hline
+        \hline
+        \multirow{2}*{状态} & \multicolumn{3}{c|}{ACTION} & \multicolumn{2}{c}{GOTO}\\
+        \cline{2-6}
+        & $b$ & $a$ & $\$$ & $B$ & $A$\\
+        \hline
+        0 & $s3$ & $s4$ & & 1& 2\\
+        1 & $s7$ & $s4$ & acc & 6 & 5\\
+        2 & $s3$ & $s4$ & & 8 & 2\\
+        3 & $r2$ & $r2$ & $r2$ & &  \\
+        4 & $r4$ & $r4$ & & & \\
+        5 & $s7/r3$ & $s4/r3$ & & 9 & 10 \\
+        6 & $s7$ & $s4$ & & 6 &5 \\
+        7 & $r2$ & $r2$ & & & \\
+        8 & $s7/r1$ & $s4/r1$ & $r1$ & 6 & 5\\
+        9 & $s7/r1$ & $s4/r1$  & & 6 & 5\\
+        10 & $s7$ & $s4$ & & 9 & 10\\
+        \hline
+    \end{tabular}
+    \label{table:lr}
+  \end{table}
+\item $LALR(1)$分析表如表\ref{table:lalr}。不是$LALR(1)$文法，因为预测分析表有冲突。
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}}
+        \hline
+        \hline
+        \multirow{2}*{状态} & \multicolumn{3}{c|}{ACTION} & \multicolumn{2}{c}{GOTO}\\
+        \cline{2-6}
+        & $b$ & $a$ & $\$$ & $B$ & $A$\\
+        \hline
+        0 & $s37$ & $s4$ & & 1& 2\\
+        1 & $s37$ & $s4$ & acc & 6 & 5\\
+        210 & $s37$ & $s4$ & & 89 & 210\\
+        37 & $r2$ & $r2$ & $r2$ & &  \\
+        4 & $r4$ & $r4$ & & & \\
+        5 & $s37/r3$ & $s4/r3$ & & 89 & 210 \\
+        6 & $s37$ & $s4$ & & 6 &5 \\
+        89 & $s37/r1$ & $s4/r1$ & $r1$ & 6 & 5\\
+        \hline
+    \end{tabular}
+    \label{table:lalr}
+  \end{table}
+\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}

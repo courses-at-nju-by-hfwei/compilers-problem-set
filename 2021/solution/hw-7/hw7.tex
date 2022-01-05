@@ -1,0 +1,119 @@
+% hw7.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (7)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{2021年12月17日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[\score{20 = 5 + 10 + 5}]
+  考虑循环语句
+  \[
+    \repeatkw\; S\; \untilkw\; B
+  \]
+  \begin{enumerate}[(1)]
+    \item 请基于控制流语句与布尔表达式语法制导定义
+      为 $\repeatkw{} \dots \untilkw$ 语句添加语义规则;
+    \item 请基于布尔表达式与控制流语句回填翻译方案
+      为 $\repeatkw{} \dots \untilkw$ 语句设计回填方案。
+    \item 请为以下代码片段生成中间代码 ({\it 注\emph{:} 请自行选择是否使用回填方案})
+      \begin{align*}
+        & i = 2000 \\
+        & j = 4000 \\
+        &\repeatkw \\
+          &\qquad \ifkw\; i == 2022\; \\
+          &\qquad\qquad \printkw\; {\textsl{``Hello 2022''}} \\
+          &\qquad i = i + 1 \\
+          &\qquad j = j - 1 \\
+        &\untilkw\; (i > 3000 \;\parallel\; j < 3500)
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+{\color{red}关于问题(3)的说明}：一，如果考试题目里要求给出图示，展示代码生成过程，则需要按照要求给出。二，题目里给出的是伪代码，省略了大括号，若是使用回填方案生成中间代码，则需按照文法添加必要的大括号。
+\begin{enumerate}[(1)]
+    \item 为产生式$S\to \repeatkw\; S_1\; \untilkw\; B$添加语义规则
+        \begin{equation*}
+            \begin{aligned}
+                & B.true = S.next\\
+                & B.false = newlabel()\\
+                & S_1.next = B.code\\
+                & S.code = label(B.false)\; ||\; S_1.code\; ||\; B.code\\
+            \end{aligned}
+        \end{equation*}
+    \item 设计回填方案\\
+    产生式: $S\to \repeatkw\; M_1 S_1\; \untilkw\;M_2 B$\\
+    语义规则: 
+    \begin{equation*}
+        \begin{aligned}
+            &backpatch(S_1.nextlist, M_2.instr)\\
+            &backpatch(B.falselist, M_1.instr)\\
+            &S.nextlist = B.truelist\\
+        \end{aligned}
+    \end{equation*}
+    产生式: $M\to\epsilon$ \\
+    语义规则: $M.instr = nextinstr $
+    \item
+    \begin{equation*}
+        \begin{aligned}
+            & 100: i = 2000\\
+            & 101: j = 4000\\
+            & 102: if\; i == 2022\; goto\; 104\\
+            & 103: goto\; 105\\
+            & 104: print\; "Hello\; 2022"\\
+            & 105: i = i + 1\\
+            & 106: j = j - 1\\
+            & 107: if\; i > 3000\; goto\;\_\\
+            & 108: goto\; 109\\
+            & 109: if\; j < 3500\; goto\;\_\\
+            & 110: goto\; 102\\
+        \end{aligned}
+    \end{equation*}
+\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
