@@ -1,0 +1,168 @@
+% hw2.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (2)}
+\me{\hspace{50pt}}{\hspace{70pt}}{}{}
+\date{2022年11月16日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[正则表达式与自动机]
+  考虑正则表达式 $r = (1 \mid 01)^{\ast} 0^{\ast}$ (字母表 $\Sigma = \set{0, 1}$)。
+  \sidenote{
+    如何用 \LaTeX{} 写(复杂的)正则表达式?
+    \begin{itemize}
+      \item \href{https://tex.stackexchange.com/a/162122/23098}{How to escape properly and output regex in latex?@tex.stackexchange}
+    \end{itemize}
+    如何用 \LaTeX{} 画自动机?
+    \begin{itemize}
+      \item \href{https://www3.nd.edu/~kogge/courses/cse30151-fa17/Public/other/tikz\_tutorial.pdf}{使用{\texttt{tikz automata}} library}
+      \item \href{https://hayesall.com/blog/latex-automata/}{另一个关于\texttt{tikz automata}的教程}
+      \item 在 \href{https://notendur.hi.is/aee11/automataLatexGen/}{网站\texttt{automataLatexGen}生成\LaTeX{}代码}
+      \item \red{使用 \href{https://www.jflap.org/}{\texttt{jflap}} 工具 ({\bf 推荐学习该工具})}
+    \end{itemize}
+  }
+  \begin{enumerate}[(1)]
+    \item 使用 Thompson 构造法构造等价的 NFA;
+    \item 使用子集构造法构造等价的 DFA;
+    \item 将上一步构造的 DFA 最小化;
+  \end{enumerate}
+  以上各小题, 请给出关键的中间步骤。
+
+  \noindent (不必给出所有的细节, 类似的步骤可以``跳步'')
+\end{problem}
+
+\begin{solution}
+	 (1)\\
+	\begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=2cm,
+		scale = 1,transform shape]
+		\tikzstyle{every state}=[fill={rgb:black,1;white,10}]
+		\node[state] (0) [initial]{$0$};
+		\node[state] (1) [right of=0] {$1$};
+		\node[state] (2) [above right of=1] {$2$};
+		\node[state] (3) [below right of=1] {$3$};
+		\node[state] (4) [right of=2] {$4$};
+		\node[state] (5) [right of=3] {$5$};
+		\node[state] (6) [right of=5] {$6$};
+		\node[state] (7) [above right of=6] {$7$};
+		\node[state] (8) [right of=7] {$8$};
+		\node[state] (9) [right of=8] {$9$};
+		\node[state] (10) [right of=9] {$10$};
+		\node[state, accepting] (11) [right of=10] {$11$};
+
+		\path 	(0)  edge			   node {$\epsilon$} (1)
+				(0)  edge[bend left=45]node {$\epsilon$} (8)
+				(1)  edge              node {$\epsilon$} (2)
+				(1)  edge              node {$\epsilon$} (3)
+				(2)  edge              node {$1$} (4)
+				(3)  edge              node {$0$} (5)
+				(4)  edge              node {$\epsilon$} (7)
+				(5)  edge              node {$1$} (6)
+				(6)  edge              node {$\epsilon$} (7)
+				(7)  edge              node {$\epsilon$} (8)
+				(7)  edge[bend left=90]node {$\epsilon$} (1)
+				(8)  edge              node {$\epsilon$} (9)
+				(8)  edge[bend left=60]node {$\epsilon$} (11)
+				(9)  edge              node {$0$} (10)
+				(10) edge[bend left=60]node {$\epsilon$} (9)
+				(10) edge              node {$\epsilon$} (11);
+	\end{tikzpicture}
+\\
+(2)\\
+\begin{table}[ht]
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		\textbf{NFA状态} 		& \textbf{DFA状态} & \textbf{0} & \textbf{1}	  \\ \hline
+		{0,1,2,3,8,9,11}      & A               & B          & C          	 \\ \hline
+		{5,9,10,11}           & B               & C          & C             \\ \hline
+		{1,2,3,4,7,8,9,11}    & C               & B          & C     		 \\ \hline
+		{9,10,11}             & D               & D          & $\varnothing$ \\ \hline
+		{1,2,3,6,7,8,9,11}    & E               & B			 & C     		 \\ \hline
+	\end{tabular}
+\end{table}
+\\
+\begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=2cm,
+	scale = 1,transform shape]
+	\tikzstyle{every state}=[fill={rgb:black,1;white,10}]
+	\node[state,accepting] (A) [initial] {$A$};
+	\node[state,accepting] (C) [right of=A] {$C$};
+	\node[state,accepting] (B) [above of=C] {$B$};
+	\node[state,accepting] (D) [above of=B] {$D$};
+	\node[state,accepting] (E) [right of=B] {$E$};
+	
+	\path 	
+		(A)  edge              node {$0$} (B)
+		(A)  edge			   node {$1$} (C)
+		(B)  edge              node {$0$} (D)
+		(B)  edge[bend left=30]node {$1$} (E)
+		(C)  edge[loop below]  node {$1$} (C)
+		(C)  edge              node {$0$} (B)
+		(D)  edge[loop above]  node {$0$} (D)
+		(E)  edge[bend left=30]node {$0$} (B)
+		(E)  edge              node {$1$} (C);
+\end{tikzpicture} 
+\\
+(3)\\
+$\Pi_{0}=\{\{A,B,C,D,E\}\}$\\
+$\Pi_{1}=\{\{A,B,C,E\},\{D\}\}\}$\\
+$\Pi_{2}=\{\{A,C,E\},\{B\},\{D\}\}\}$\\
+$\Pi_{3}=\Pi_{2}=\Pi_{final}$\\
+或者可以直接看出来合并A,C,E\\
+$a=\{A,C,E\}$\\
+$b=\{B\}$\\
+$c=\{D\}$\\
+\begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=2cm,
+	scale = 1,transform shape]
+	\tikzstyle{every state}=[fill={rgb:black,1;white,10}]
+	\node[state,accepting] (a) [initial] {$a$};
+	\node[state,accepting] (b) [right of=a] {$b$};
+	\node[state,accepting] (c) [right of=b] {$c$};
+	\path 	
+	(a)  edge[loop below]  node {$1$} (a)
+	(a)  edge[bend left=30]node {$0$} (b)
+	(b)  edge[bend left=30]node {$1$} (a)
+	(b)  edge 			   node {$0$} (c)
+	(c)  edge[loop below]  node {$0$} (c);
+\end{tikzpicture} 
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写 (若无内容, 可删除该节)
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
