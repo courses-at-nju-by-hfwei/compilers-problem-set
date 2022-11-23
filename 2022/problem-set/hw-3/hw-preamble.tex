@@ -32,8 +32,8 @@
 
 % for fonts
 \usepackage{fontspec}
-\newcommand{\song}{\CJKfamily{song}} 
-\newcommand{\kai}{\CJKfamily{kai}} 
+\newcommand{\song}{\CJKfamily{song}}
+\newcommand{\kai}{\CJKfamily{kai}}
 
 % To fix the ``MakeTextLowerCase'' bug:
 % See https://github.com/Tufte-LaTeX/tufte-latex/issues/64#issuecomment-78572017
@@ -43,7 +43,7 @@
 
 % for url
 \usepackage{hyperref}
-\hypersetup{colorlinks = true, 
+\hypersetup{colorlinks = true,
   linkcolor = teal,
   urlcolor  = teal,
   citecolor = blue,
@@ -71,10 +71,10 @@
 }
 
 % \newcommand{\goal}[1]{
-%   \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.50\textwidth}{\large 
+%   \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.50\textwidth}{\large
 %     \begin{itemize}
 %       \item 体会``思维的乐趣''
-%       \item 初步了解递归与数学归纳法 
+%       \item 初步了解递归与数学归纳法
 %       \item 初步接触算法概念与问题下界概念
 %     \end{itemize}}}}
 %   \end{center}
@@ -191,3 +191,20 @@
 \renewcommand\thefootnote{\protect\circled{\arabic{footnote}}}
 
 \newcommand{\score}[1]{{\bf [#1 分]}}
+
+\newcommand{\rel}[1]{\xrightarrow{#1}}
+\newcommand{\dstar}{\xRightarrow[]{\ast}}
+\newcommand{\dplus}{\xRightarrow[]{+}}
+\newcommand{\lm}{\xRightarrow[\text{lm}]{}}
+\renewcommand{\rm}{\xRightarrow[\text{rm}]{}}
+\newcommand{\dpluslm}{\xRightarrow[\text{lm}]{+}}
+\newcommand{\dstarlm}{\xRightarrow[\text{lm}]{\ast}}
+\newcommand{\dplusrm}{\xRightarrow[\text{rm}]{+}}
+\newcommand{\dstarrm}{\xRightarrow[\text{rm}]{\ast}}
+
+\newcommand{\first}{\textsc{First}}
+\newcommand{\follow}{\textsc{Follow}}
+
+% see https://tex.stackexchange.com/a/109906/23098
+\usepackage{empheq}
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
