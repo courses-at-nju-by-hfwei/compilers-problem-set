@@ -1,0 +1,88 @@
+% hw4.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (4)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2022年11月30日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  给定下述文法$G$,
+  \begin{align}
+    S &\to BAS \\[8pt]
+    S &\to cA \\[8pt]
+    A &\to aA \\[8pt]
+    A &\to e \\[8pt]
+    B &\to bB \\[8pt]
+    B &\to \epsilon
+  \end{align}
+
+  \begin{enumerate}[(1)]
+    \item 请为该文法计算必要的\first{}集合;
+    \item 请为该文法计算必要的\follow{}集合;
+    \item 请为该文法设计预测分析表;
+    \item 该文法是$LL(1)$文法吗? 请说明理由;
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\pagebreak
+%%%%%%%%%%%%%%%
+\begin{problem}
+  考虑 ANTLR4 改造后的如下 \texttt{expr} 文法
+  (上层规则为 \texttt{stat : expr[0] ';' ;}):
+
+  \fig{width = 0.50\textwidth}{figs/LRExprPrec}
+
+  \noindent 请给出 $1 \ast 2 + 3 + 4 \ast 5$
+  在该文法下对应的语法分析树~\footnote{该算法称为``优先级上升 (Climbing)''算法。}。
+  请给出关键的解释, 点到即可, 不必面面俱到~\footnote{
+    今天课上讲解时遗漏了一个关键点，课后有同学问到了。
+    下次课，我们再回顾一下。
+  }。
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
