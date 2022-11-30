@@ -1,0 +1,129 @@
+% hw3.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (3)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2022年11月23日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  % \mfigcap{width = 0.85\textwidth}{figs/George-Boole}{George Boole}
+  % \begin{center}{\fcolorbox{blue}{yellow!60}{\parbox{0.65\textwidth}{\large
+  %   \begin{itemize}
+  %     \item
+  %   \end{itemize}}}}
+  % \end{center}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  考虑上下文无关文法:
+  \[
+    S \to S S + \mid S S \ast \mid a
+  \]
+  以及串 $a a + a \ast$。
+
+  \begin{enumerate}[(1)]
+    \item 请给出该串的一棵语法分析树~\footnote{
+      \begin{itemize}
+        \item 如何使用 \href{https://mirrors.hit.edu.cn/CTAN/graphics/pgf/contrib/tikz-qtree/tikz-qtree-manual.pdf}{\texttt{tikz-qtree}} 画语法分析树。
+        \item 你可以使用 \texttt{jflap 7.1} 中的 ``Input|Brute Force Parse'' 与 ``Input|User Control Parser'' 构造语法分析树。
+      \end{itemize}}
+    \item 该文法是否是二义性文法? 请证明你的结论。
+    \item 请描述该文法生成的语言~\footnote{你可以使用 \texttt{jflap v8.0 (beta)} 中的 ``Input|Generate Language'' 自动枚举若干句子, 然后观察规律}。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+	\begin{enumerate}[(1)]
+		\item 
+			\Tree 
+				[.S [.S [.S a ]
+						[.S a ]
+						[.+ ] ]
+					[.S a ]
+					[.* ] ]
+    \item 这个文法是无二义性的。\\
+要证明这个问法是无二义性的，我们需要证明：
+\begin{gather*}
+	L(SS+)\cap L(SS*) = \emptyset \\
+	L(SS+)\cap L(a) = \emptyset \\
+	L(SS*)\cap L(a) = \emptyset \\
+\end{gather*}
+很容易根据各个文法生成的语言格式判断上述三个式子是成立的。$L(SS+)$表示的语言是以$+$结尾的后缀表达式，$L(SS*)$表示的语言是以$*$结尾的后缀表达式，所以两者的交集为空。另两个式子同理。\\
+所以，这个问法是无二义性的。
+\item 该文法生成的语言是一个包含运算符$+$,$*$和字母$a$的后缀表达式
+	\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%
+% \begin{problem}
+%   请消除下列文法的左递归~\footnote[]{请参考教材}:
+%   \begin{align*}
+%     S &\to Sa \mid Tbc \mid Td \\[8pt]
+%     T &\to Se \mid gh
+%   \end{align*}
+% \end{problem}
+
+% \begin{solution}
+% \end{solution}
+% %%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  理解 Listener 与 Visitor 设计模式，对于本课程实验至关重要。
+  本题可以作为学习笔记，比如从类图、顺序图等角度解释这两种设计模式。
+  \begin{enumerate}[(1)]
+    \item 请自学 Listener (监听器) 设计模式~\footnote[]{
+      \begin{itemize}
+        \item \href{https://github.com/antlr/antlr4/blob/master/doc/listeners.md}{Listener in ANTLR 4}
+        \item 《ANTLR 4 权威指南》Section 4.3、Section 7.2
+      \end{itemize}
+    }。
+    \item 请自学 Visitor (访问者) 设计模式~\footnote{
+      \begin{itemize}
+        \item \href{https://en.wikipedia.org/wiki/Visitor_pattern}{Vistor Design Pattern @ wiki}
+        \item 《ANTLR 4 权威指南》Section 4.2、Section 7.3
+      \end{itemize}
+    }。
+  \end{enumerate}
+\end{problem}
+%%%%%%%%%%%%%%%
+\begin{solution}
+	参考附录。
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
