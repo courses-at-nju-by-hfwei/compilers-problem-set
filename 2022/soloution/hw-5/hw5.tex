@@ -1,0 +1,163 @@
+% hw5.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (5)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2022年12月08日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle = \ttfamily\small,
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	flexiblecolumns,
+	numbers=left,
+	frame=lrtb
+}
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  现考虑为课堂上展示的 \texttt{Cymbol} 语言添加 \texttt{struct} 语法结构，
+  以支持如下图所示的代码片段。
+  \fig{width = 0.40\textwidth}{figs/struct-code}
+  \begin{enumerate}[(1)]
+    \item 请给出描述 \texttt{struct} 结构的文法。
+    \item 请简述如何为新的 \texttt{Cymbol} 语言构建作用域树。
+      可以只介绍增量部分，并只需给出要点，例如:
+      \begin{itemize}
+        \item 何时开始新的 \texttt{struct} 作用域?
+        \item 何时退出 \texttt{struct} 作用域?
+        \item 何时以及如何解析成员访问 $a.b.y$?
+      \end{itemize}
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+	\begin{enumerate}[(1)]
+		\item
+			在 Cymbol 文法基础上，struct 结构的文法描述如下
+			\begin{lstlisting}
+prog : (varDecl | functionDecl | structDecl)* EOF ;
+type : 'int' | 'double' | 'void' | structType ;
+structDecl : 'struct' ID '{' (varDecl | structDecl)* '}' ';' ;
+structType :  ID ;
+stat : structDecl | ... ;
+expr : expr '.' ID | ... ;
+			\end{lstlisting}
+		\item
+			\begin{itemize}
+				\item enterStructDecl 开始新的 struct 作用域
+				\item exitStructDecl 退出 struct 作用域
+				\item struct 对应的 symbol 应置入其作用域的 enclosing 作用域中
+				\item 解析结构体成员访问运算符时，应先在符号表中 resolve 结构体变量对应的 symbol 和 scope，然后在这个
+				scope 中 resolve 结构体成员，该过程可递归进行
+			\end{itemize}
+
+	\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\pagebreak
+%%%%%%%%%%%%%%%
+\begin{problem}
+  考虑如下图所示的变量声明文法，现要将每个 \texttt{id} 的名字和类型加入符号表
+  (假设只有一个全局作用域)。请描述如何使用 ANTLR 4 为该任务编写监听器?
+  \fig{width = 0.35\textwidth}{figs/type-decl}
+\end{problem}
+
+\begin{solution}
+	将产生式改写为如下文法文件
+	\begin{lstlisting}
+D : T L
+;
+T : INT # TypeInt
+	| FLOAT # TypeFloat
+;
+L : L COMMA ID # DecMore
+	| ID # DecOne
+;
+	\end{lstlisting}
+	\begin{lstlisting}
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
+public class ExampleListener extends ExampleBaseListener {
+	private final ParseTreeProperty<String> typeProperty = new ParseTreeProperty<>();
+	@Override public void enterTypeInt(SysYParser.TypeIntContext ctx) {
+		typeProperty.put(ctx.getParent(), "int");
+	}
+	@Override public void enterTypeFloat(SysYParser.TypeFloatContext ctx) {
+		typeProperty.put(ctx.getParent(), "float");
+	}
+	@Override public void enterDecMore(SysYParser.DecMoreContext ctx) {
+		System.err.printf("+ %s %s%n", typeProperty.get(ctx.getParent()),
+		ctx.ID().getSymbol().getText());
+		typeProperty.put(ctx, typeProperty.get(ctx.getParent()));
+	}
+	@Override public void enterDecOne(SysYParser.DecOneContext ctx) {
+		System.err.printf("+ %s %s%n", typeProperty.get(ctx.getParent()),
+		ctx.ID().getSymbol().getText());
+	}
+}
+	\end{lstlisting}
+	简单起见，使用字符串表示类型\\
+	对于输入 int a, b, c ，对应的输出为
+	\begin{lstlisting}
++ int c
++ int b
++ int a
+	\end{lstlisting}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
