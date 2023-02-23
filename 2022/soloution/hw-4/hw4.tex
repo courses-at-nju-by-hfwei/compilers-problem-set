@@ -74,7 +74,7 @@
 \end{problem}
 
 \begin{solution}
-	\Tree [.$expr[0]$ 1 *  [.$expr[5]$ 2 ] + [.$expr[4]$ 3 * [.$expr[5]$ 4 ] ] ] 
+	\Tree [.$expr[0]$ 1 *  [.$expr[5]$ 2 ] + [.$expr[4]$ 3 ] + [.$expr[4]$ 4 * [.$expr[5]$ 5 ] ] ] 
 	
 	\noindent\\
 	初始为expr[0]，匹配1。\{4>=0\}?为真，匹配*。递归调用expr[5]，匹配2。\{3>=5\}?为假，expr[5]返回。\{3>=0\}?为真，expr[0]匹配+。后面的过程同理。
