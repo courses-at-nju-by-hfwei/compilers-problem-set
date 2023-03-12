@@ -1,0 +1,78 @@
+% hw1.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (1)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{\zhtoday}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  \fig{width = 0.80\textwidth}{figs/regex-quote}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+\begin{problem}[正则表达式]
+  \begin{enumerate}[(1)]
+    \item 请使用正则表达式匹配中国邮政编码：共 6 位数字，其中第 2 位不为 8，无其它限制。
+    \item 请使用正则表达式将一段文本中所有连续两次重复出现的单词找出来。
+
+      例如，对于这段文本 \teal{\url{https://regex101.com/r/x8Guvc/1}},
+      需要匹配 ``of of''、``are are'' 以及 ``and and''。
+    \item 给定一段包含数值的文本，其中既有价格又有数量
+      \teal{\url{https://regex101.com/r/z6Q6Ne/1}}。
+      \begin{itemize}
+        \item 请使用正则表达式匹配价格（不返回美元符号）;
+        \item 请使用正则表达式匹配数量，但不要匹配价格。
+      \end{itemize}
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[正则表达式]
+  参考 \href{https://github.com/courses-at-nju-by-hfwei/compilers-resources/tree/master/books/RegEx}{compilers-resources/books/RegEx/}，
+  \begin{itemize}
+    \item 学习更多关于正则表达式的用法
+    \item 学习 Java、Python 等程序设计语言中的正则表达式功能
+    \item 学习 Vim, grep 中的正则表达式功能
+  \end{itemize}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
