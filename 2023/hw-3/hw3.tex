@@ -1,0 +1,72 @@
+% hw3.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (3)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2023年03月28日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  \fig{width = 0.60\textwidth}{figs/design-patterns}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[设计模式]
+  理解 Listener 与 Visitor 设计模式，对于本课程实验至关重要。
+  本题可以作为学习笔记，比如从类图、顺序图等角度解释这两种设计模式。
+  \begin{enumerate}[(1)]
+    \item 请自学 Listener (监听器) 设计模式~\footnote{参考资料:
+      \begin{itemize}
+        \item \href{https://github.com/antlr/antlr4/blob/master/doc/listeners.md}{Listener in ANTLR 4}
+        \item 《ANTLR 4 权威指南》Section 4.3、Section 7.2
+        \item 分析 ANTLR 4 自动生成的语法分析器代码中的 Listener 设计模式
+      \end{itemize}
+    }。
+    \item 请自学 Visitor (访问者) 设计模式~\footnote{参考资料:
+      \begin{itemize}
+        \item 《ANTLR 4 权威指南》Section 4.2、Section 7.3
+        \item \href{https://en.wikipedia.org/wiki/Visitor_pattern}{Vistor Design Pattern @ wiki}
+        \item 《Design Patterns Elements of Reusable Object-Oriented Software》 Page 331
+        \item 分析 ANTLR 4 自动生成的语法分析器代码中的 Visitor 设计模式
+      \end{itemize}
+    }。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+你可以写
+\begin{itemize}
+  \item 对课程及教师的建议与意见
+  \item 教材中不理解的内容
+  \item 希望深入了解的内容
+  \item $\cdots$
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
