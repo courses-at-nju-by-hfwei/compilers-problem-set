@@ -4,6 +4,7 @@ Problem Set for Course [Compilers@software.nju.edu](https://github.com/orgs/cour
 
 ## 作业
 
+- [2024](2024/)
 - [2023](2023/)
 - [2022](2022/)
 - [2021](2021/)
@@ -17,6 +18,6 @@ Problem Set for Course [Compilers@software.nju.edu](https://github.com/orgs/cour
 - 也可以使用传统的手工艺: 手写、拍照。
 
 ## 如何提交作业
-- 请通过教学立方提交作业
+- 请通过"教学立方"提交作业
 - 不论大家使用什么工具, 最终需要提交一份单独的 `.pdf` 文件
 - 文件名命名: 作业编号-学号-姓名.pdf
