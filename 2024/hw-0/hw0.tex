@@ -1,0 +1,71 @@
+% hw0.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (0)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{\zhtoday}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  \mfig{width = 1.00\textwidth}{figs/abstraction}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+\begin{problem}[计算机系统基础]
+  观看系列视频 \href{https://www.bilibili.com/video/BV1EW411u7th?}{Crash Course Computer Science@bilibili}:
+  \begin{itemize}
+    \item 观看 $P1 \sim P9$
+    \item 目的: 了解机器语言是如何跑起来的；见识视频中一再提到的``抽象(\textsc{Abstraction})''的力量
+    \item {\bf 作业:} 随便写点什么吧, 比如可以整理一下知识点, 比如哪些地方让你有恍然大悟的感觉。
+  \end{itemize}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\beginoptional
+%%%%%%%%%%%%%%%
+\begin{problem}[编译器结构]
+  写一段简单的 C 语言程序, 包含一些基本的语法结构, 如变量声明、赋值、条件判断、循环等,
+  尝试使用 \href{https://godbolt.org/}{Clang} 或者 \href{https://godbolt.org/}{Compiler Explorer} 完成以下任务:
+  \begin{itemize}
+    \item 编译运行该程序 (\texttt{clang xxx.c -o xxx})
+    \item 生成 LLVM IR 代码 (\texttt{clang -emit-llvm -S xxx.c -o xxx.ll -O1 -g0})
+    \item 生成 RISC-V 代码 (感兴趣的同学还可以尝试使用 \href{https://github.com/TheThirdOne/rars}{RISC-V 模拟器}运行)
+    \item 产生词法单元的输出 (\texttt{clang -fsyntax-only -Xclang -dump-tokens xxx.c})
+    \item 生成语法分析树 (\texttt{clang -Xclang -ast-dump xxx.c})
+  \end{itemize}
+\end{problem}
+
+\begin{solution}
+  如果使用了 Compiler Explorer, 可以分享你的链接 (页面左上角)。
+  其它方式, 可以截图分享。
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+请在 Zulip 上讨论对作业或者课程的意见。
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
