@@ -1,0 +1,125 @@
+% hw2.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (2)}
+\me{魏恒峰}{hfwei@nju.edu.cn}{}{}
+\date{\zhtoday}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  \fig{width = 0.80\textwidth}{figs/automata-quote}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+
+%%%%%%%%%%%%%%%
+\begin{problem}[从正则表达式到自动机]
+  考虑如下正则表达式:
+  \sidenote{
+    如何用 \LaTeX{} 写(复杂的)正则表达式?
+    \begin{itemize}
+      \item \href{https://tex.stackexchange.com/a/162122/23098}{How to escape properly and output regex in latex?@tex.stackexchange}
+    \end{itemize}
+    如何用 \LaTeX{} 画自动机?
+    \begin{itemize}
+      \item \href{https://www3.nd.edu/~kogge/courses/cse30151-fa17/Public/other/tikz\_tutorial.pdf}{使用{\texttt{tikz automata}} library}
+      \item \href{https://hayesall.com/blog/latex-automata/}{另一个关于\texttt{tikz automata}的教程}
+      \item 在 \href{https://notendur.hi.is/aee11/automataLatexGen/}{网站\texttt{automataLatexGen}生成\LaTeX{}代码}
+      \item \red{使用 \href{https://www.jflap.org/}{\texttt{jflap}} 工具 ({\bf 推荐学习该工具})}
+    \end{itemize}
+  }
+
+  \[
+    \Big(0|\big(1(01^{\ast}0)^{\ast}1\big)\Big)^{\ast}
+  \]
+
+  \begin{enumerate}[(1)]
+    \item 请使用 Thompson 构造法将该正则表达式转换为 NFA。
+    \item 请使用子集构造法将该 NFA 转换为 DFA。
+    \item 请使用 Hopcroft 最小化算法将该 DFA 最小化。
+    \item 请解释这个正则表达式为什么表示``3 的倍数(二进制表示)''
+    \item 如果有条件, 请让 GPT-4 证明一下。它的证明是正确的吗?
+      如果不正确, 有可能在它的证明的基础上进行修正, 得到正确的证明吗?
+      或者可以与之交互, 引导它得到正确的证明吗?
+      请提交交互记录截图或链接。
+    \item (\red{\bf 可选})
+      请使用 Kleene 算法 (见同文件夹 Kleene Algorithm PDF 文档) 将最小化的 DFA 转化为正则表达式。
+    \item (\red{\bf 可选})
+      得到的正则表达式与原正则表达式是否相同?
+      如果不同, 是否可以通过一些等价变换得到相同的正则表达式?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[设计模式]
+  理解 Listener 与 Visitor 设计模式，对于本课程实验至关重要。
+  本题可以作为学习笔记，比如从类图、顺序图等角度解释这两种设计模式。
+  \begin{enumerate}[(1)]
+    \item 请自学 Listener/Observer (监听器) 设计模式~\footnote{参考资料:
+      \begin{itemize}
+        \item \href{https://github.com/antlr/antlr4/blob/master/doc/listeners.md}{Listener in ANTLR 4}
+        \item 《ANTLR 4 权威指南》Section 4.3、Section 7.2
+        \item 分析 ANTLR 4 自动生成的语法分析器代码中的 Listener 设计模式
+      \end{itemize}
+    }。
+    \item 请自学 Visitor (访问者) 设计模式~\footnote{参考资料:
+      \begin{itemize}
+        \item 《ANTLR 4 权威指南》Section 4.2、Section 7.3
+        \item \href{https://en.wikipedia.org/wiki/Visitor_pattern}{Vistor Design Pattern @ wiki}
+        \item 《Design Patterns Elements of Reusable Object-Oriented Software》 Page 331
+        \item 分析 ANTLR 4 自动生成的语法分析器代码中的 Visitor 设计模式
+      \end{itemize}
+    }。
+  \end{enumerate}
+  \fig{width = 0.50\textwidth}{figs/design-patterns}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\beginoptional
+%%%%%%%%%%%%%%%
+\begin{problem}[正则表达式练习]
+  参考课程录屏中的正则表达式部分或者《正则表达式必知必会》一书,
+  使用正则表达式解决以下问题。
+  \mfig{width = 0.80\textwidth}{figs/book-learn-re}
+  \mfig{width = 1.10\textwidth}{figs/regex-quote}
+
+  \begin{enumerate}[(1)]
+    \item Get all `fat' or `mat' words from the input string
+      that come after the word `The' or `the'.
+      \href{https://regex101.com/r/3x5F4W/1}{(Try it: 可在这里练习)}
+
+      \fig{width = 1.00\textwidth}{figs/fat-mat}
+    \item 在 Android 开发中，经常会看到如下所示的错误堆栈信息。
+      我们想使用正则表达式提取出错误信息中的方法名、文件名与行号三部分信息。
+
+      \texttt{at package.class.methodname(filename:linenumber)}
+
+      \href{https://regex101.com/r/YeKFVB/1}{(Try it: 可在这里练习)}
+
+      \fig{width = 0.80\textwidth}{figs/android}
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
