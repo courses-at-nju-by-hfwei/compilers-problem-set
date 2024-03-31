@@ -5,6 +5,8 @@
 % see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
 % for how to use tufte-handout
 \documentclass[a4paper, justified]{tufte-handout}
+\usepackage{listings}
+\lstset{language=Java} % 设置代码语言为 Java
 
 \input{hw-preamble} % feel free to modify this file if you understand LaTeX well
 %%%%%%%%%%%%%%%%%%%%
@@ -45,6 +47,48 @@
 \end{problem}
 
 \begin{solution}
+  \begin{enumerate}[(1)]
+    \item ``字符串''(\texttt{StringLiteral})词法规则由由四个部分组成，分别是可选的编码前缀\texttt{EncodingPrefix}、双引号、\texttt{SCharSequence}和另一个双引号。整体上，它表示了一个字符串常量的结构。接下来，我们将依次解释\texttt{EncodingPrefix}和\texttt{SCharSequence}这两个部分。
+      \begin{itemize}
+        \item \texttt{EncodingPrefix}规则定义了字符串的编码前缀。它可以是`u8'、`u'、`U'或`L'之一。这些前缀用于指示字符串的字符编码方式，比如UTF-8 (u8)、UTF-16 (u和U)或宽字符（L)。
+        \item \texttt{SCharSequence}规则定义了定义了\texttt{SChar}的序列,即字符串中的字符序列。它由一个或多个\texttt{SChar}组成。而\texttt{SChar}定义了字符串中的单个字符。它可以是除了双引号、反斜杠和换行符之外的任何字符。如果字符是反斜杠，则可能是转义序列\texttt{EscapeSequence}。此外，该规则还允许处理转义序列$\backslash$n（表示换行）和$\backslash$r$\backslash$n（表示回车换行）。接下来，我们将解释\texttt{EscapeSequence}。\texttt{EscapeSequence}定义了转义序列的形式。转义序列允许在字符串中插入一些特殊字符，如换行符、制表符等。
+它可以是简单转义序列\texttt{SimpleEscapeSequence}、八进制转义序列\texttt{OctalEscapeSequence}、十六进制转义序列\texttt{HexadecimalEscapeSequence}或通用字符名称\texttt{UniversalCharacterName}之一：
+          \begin{itemize}
+            \item \texttt{SimpleEscapeSequence}定义了简单转义序列的形式，比如$\backslash$n（换行符）、$\backslash$t（制表符）等。
+            \item \texttt{OctalEscapeSequence}定义了八进制转义序列的形式，比如$\backslash$0、$\backslash$123等。
+            \item \texttt{HexadecimalEscapeSequence}定义了十六进制转义序列的形式，比如$\backslash$x1F等。
+          \end{itemize}
+        \item \texttt{EscapeSequence}在`$\backslash$$\backslash$$\backslash$n'前面可能是``$\backslash$$\backslash$$\backslash$n' （也包括下一条规则 '$\backslash$$\backslash$$\backslash$r$\backslash$n'）是为了处理 C 语言中的多行字符串字面量与多行宏中的换行的。
+      \end{itemize}
+    \item
+      \begin{itemize}
+        \item 整数常量\texttt{IntegerConstant}由四个部分组成，分别是十进制常量（\texttt{DecimalConstant}）、八进制常量（\texttt{OctalConstant}）、十六进制常量（\texttt{HexadecimalConstant}）和二进制常量（\texttt{BinaryConstant}）。除了二进制常量外，每个部分都可以跟随一个整数后缀（\texttt{IntegerSuffix}）。
+          \begin{itemize}
+            \item \texttt{BinaryConstant}：以`0b'或0B为前缀，后面跟着一个由0和1组成的二进制数字序列。
+            \item \texttt{DecimalConstant}：以1到9之间的非零数字开头，后面可以跟着任意数量的数字（0-9）。
+            \item \texttt{OctalConstant}：以数字0开头，后面跟着零个或多个八进制数字（0-7）。
+            \item \texttt{HexadecimalConstant}：以`0x'或`0X'为前缀，后面跟着至少一个十六进制数字（0-9，a-f，A-F）。
+            \item \texttt{IntegerSuffix}：整数后缀由可选的无符号后缀（\texttt{UnsignedSuffix}）和可选的长整数后缀（\texttt{LongSuffix或LongLongSuffix}）组成。无符号后缀可以是`u'或`U'。长整数后缀可以是`l'、`L'、`ll'或`LL'，分别表示长整数和长长整数。。
+          \end{itemize}
+        \item 浮点数常量\texttt{FloatingConstant}可以是十进制浮点常量（\texttt{DecimalFloatingConstant}）或十六进制浮点常量（\texttt{HexadecimalFloatingConstant}）之一。
+          \begin{itemize}
+            \item 十进制浮点常量\texttt{DecimalFloatingConstant}由两个部分组成：小数部分（\texttt{FractionalConstant}）、指数部分（\texttt{ExponentPart}）和浮点数后缀（\texttt{FloatingSuffix}）以及数字序列(\texttt{DigitSequence})、指数部分（\texttt{ExponentPart}）和浮点数后缀（\texttt{FloatingSuffix}）。小数部分可以是小数点前的数字序列，后跟小数点，再跟小数点后的数字序列；或者是仅有小数点后的数字序列。指数部分以`e'或`E'开头，可以带正负号，后面跟着一个数字序列。
+            \item 十六进制浮点常量\texttt{HexadecimalFloatingConstant} 由四个部分组成：十六进制前缀（\texttt{HexadecimalPrefix}）、十六进制小数部分（\texttt{HexadecimalFractionalConstant}或\texttt{HexadecimalDigitSequence}）、二进制指数部分（\texttt{BinaryExponentPart}）和浮点数后缀（\texttt{FloatingSuffix}）。十六进制前缀以`0x'或`0X'开头。十六进制小数部分可以是可选的十六进制数字序列，后跟小数点，再跟着另一个十六进制数字序列；或者仅有十六进制数字序列。二进制指数部分以`p'或`P'开头，可以带正负号，后面跟着一个数字序列。
+            \item \texttt{FloatingSuffix}可以是`f'、`F'、`l'或`L'，表示浮点数的类型（单精度浮点数、双精度浮点数、长浮点数等）。
+          \end{itemize}
+        \item \texttt{CharacterConstant}字符常量由一个单引号、\texttt{CCharSequence}和另一个单引号组成。其中\texttt{CCharSequence}是一个或多个\texttt{CChar}组成的序列。字符常量可以具有不同的前缀：`L'、`u'或`U'，用于表示不同的字符类型。\texttt{CChar}定义了字符常量中的单个字符。它可以是除了单引号、反斜杠和换行符之外的任何字符。如果字符是反斜杠，则可能是转义序列（\texttt{EscapeSequence}）。\texttt{EscapeSequence}定义了转义序列的形式。转义序列允许在字符常量中插入一些特殊字符，如换行符、制表符等。它也可以是简单转义序列（\texttt{SimpleEscapeSequence}）、八进制转义序列（\texttt{OctalEscapeSequence}）、十六进制转义序列（\texttt{HexadecimalEscapeSequence}）或通用字符名称（\texttt{UniversalCharacterName}）之一。这里只介绍通用字符名称（\texttt{UniversalCharacterName}）。
+          \begin{itemize}
+            \item \texttt{UniversalCharacterName}定义了通用字符名称的形式，以$\backslash$u或$\backslash$U开头，后跟四个或八个十六进制数字。\texttt{HexQuad}定义了四个连续的十六进制数字，用于表示通用字符名称中的码点。
+          \end{itemize}
+      \end{itemize}
+    \item 为了尽可能覆盖C语言的词法单元，可以考虑设计以下几种情况:
+      \begin{itemize}
+        \item 测试基本词法单元：添加各种基本数据类型的常量，如整数常量、浮点数常量、字符常量和各种进制的常量；添加标识符和关键字。
+        \item 测试边界情况：可以设计整数和浮点数常量的最小值、最大值以及边界情况；设计包含特殊字符的标识符。
+        \item 测试转义序列和通用字符：识别输出各种转义字符；识别通用字符。
+        \item 测试不合法字符识别：添加错误的标识符或者未定义的字符；添加错误的转义序列和通用字符。
+      \end{itemize}
+  \end{enumerate}
 \end{solution}
 %%%%%%%%%%%%%%%
 
@@ -65,6 +109,49 @@
 \end{problem}
 
 \begin{solution}
+  \begin{itemize}
+    \item \texttt{Lexer::Lex()}函数主要逻辑如下：
+      \begin{itemize}
+        \item assert(!isDependencyDirectivesLexer());：这是一个断言语句，用于确保词法分析器不处于依赖指令的词法分析模式下。如果该条件为真，将导致断言失败，表示出现了意料之外的情况。
+        \item Result.startToken();：开始一个新的标记。
+        \item 设置各种标记的标志，这些标志指示标记的一些属性，如是否在行的开头（Token::StartOfLine）、是否具有前导空格（Token::LeadingSpace）、是否具有前导空的宏(Token::LeadingEmptyMacro)等。
+        \item `bool atPhysicalStartOfLine = IsAtPhysicalStartOfLine;`将变量IsAtPhysicalStartOfLine的当前值复制给atPhysicalStartOfLine，用于记录是否在物理行的起始位置。这是为了在调用LexTokenInternal函数之前保留IsAtPhysicalStartOfLine的值，以便在需要时了解当前位置是否在物理行的起始位置。
+        \item `IsAtPhysicalStartOfLine = false;'将IsAtPhysicalStartOfLine的值设置为false，表示当前不在物理行的起始位置。这是因为在开始处理新的标记之前，词法分析器不再处于物理行的起始位置。
+        \item `bool isRawLex = isLexingRawMode();'调用isLexingRawMode()函数，用于检查词法分析器是否处于原始词法分析模式（即以原始模式进行词法分析，不执行任何预处理）。返回值存储在isRawLex变量中。
+        \item `(void) isRawLex;'这是一个类型转换语句，将isRawLex变量的值强制转换为void类型，从而避免编译器产生“未使用变量”的警告。在这里，它的目的是告诉编译器，我们有意不使用isRawLex变量，但是调用了isLexingRawMode()函数来检查词法分析器是否处于原始词法分析模式。
+        \item 接下来调用LexTokenInternal函数，这是词法分析器内部用于实际识别和解析标记的函数。它将填充Result中的标记对象，并返回一个布尔值，指示是否成功识别了标记。
+        \item returnedToken变量接收LexTokenInternal函数的返回值，用于检查是否成功识别了标记。
+        \item 最后，如果词法分析处于原始词法分析模式（isRawLex为真），则断言确保词法分析成功。否则，返回returnedToken，指示词法分析是否成功。
+      \end{itemize}
+    \item StringLiteral词法单元处理函数主要有两个LexStringLiteral和LexRawStringLiteral。
+      \begin{itemize}
+        \item `LexStringLiteral'函数处理处理的是普通的字符串常量，逻辑如下：
+          \begin{itemize}
+            \item 扫描字符串常量：从指定的字符指针 CurPtr 开始扫描源代码字符流，直到遇到字符串常量的结束引号（"）。
+            \item 处理转义字符：在扫描过程中，处理转义字符，包括反斜杠后的转义序列，如 $\backslash$n、$\backslash$t 等。转义字符会被逐个处理，以确保正确解析字符串内容。
+            \item 处理特殊情况：在处理过程中，如果遇到换行符（$\backslash$n、$\backslash$r）、文件结束符（EOF），或者文件未正确结束，则发出相应的诊断信息，并生成一个未知的标记。
+            \item 检查是否存在空字符：如果字符串中存在空字符（'$\backslash$0'），则发出警告。
+            \item 识别可选的用户定义后缀（UD-suffix）:如果在 C++11 模式下，识别并处理可选的用户定义后缀。
+            \item 构建标记：构建识别到的字符串常量为标记，并设置其类型为 tok::string\_literal。设置标记的文本范围，并更新 BufferPtr 的位置。
+          \end{itemize}
+        \item LexRawStringLiteral函数处理逻辑如下：
+          \begin{itemize}
+            \item 扫描原始字符串常量：从指定的字符指针 CurPtr 开始扫描源代码字符流，直到找到与原始字符串的结束定界符匹配的位置。
+            \item 检查原始字符串定界符：检查原始字符串的定界符是否合法，即是否以 `R' 或 `LR' 或 `u8R' 或 `uR' 或 `UR' 开头，后接 (。如果不合法，则发出相应的诊断信息，并尝试寻找下一个 （"）。
+            \item 识别可选的用户定义后缀（UD-suffix）：如果在 C++11 模式下，识别并处理可选的用户定义后缀。
+            \item 构建标记：构建识别到的原始字符串常量为标记，并设置其类型为 tok::string\_literal。设置标记的文本范围，并更新 BufferPtr 的位置。
+          \end{itemize}
+      \end{itemize}
+    \item IntegerConstant和FloatConstant词法单元处理的函数是LexNumericConstant。逻辑如下：
+      \begin{itemize}
+        \item 扫描数字常量：从指定的字符指针CurPtr开始扫描源代码字符流，识别整数或浮点数常量的字符序列。
+        \item 识别数字常量：通过`isPreprocessingNumberBody'函数判断当前字符是否属于整数或浮点数的字符序列，循环扫描直到不再是数字常量的一部分。在扫描过程中，通过`ConsumeChar'函数逐步移动字符指针，并存储识别到的字符。
+        \item 处理特殊情况：对于特殊情况，如指数表示的浮点数常量（如1e+12）、十六进制浮点数常量以及数字分隔符（C++14/C23新增），进行额外处理；对于指数表示的浮点数常量，检查是否后续还有符号，并在Microsoft模式下特殊处理；对于十六进制浮点数常量，判断是否处于不支持的模式下，例如不支持的C99模式，或者存在下划线的C++17模式；对于数字分隔符，检查其是否符合C++14或C23的要求，如果符合则发出警告。
+        \item 处理转移序列和UTF-8字符：对于可能存在于数字常量中的转义序列和UTF-8字符进行处理，包括Unicode字符名称（UCN）和UTF-8字符。
+        \item 构建标记：将识别到的数字常量构建为标记（Token），设置其类型为`tok::numeric\_constant'。设置标记的文本范围，并更新CurPtr和BufferPtr的位置。
+        \item 返回结果：返回true表示成功识别数字常量，并存储到传入的Token对象中。
+      \end{itemize}
+  \end{itemize}
 \end{solution}
 %%%%%%%%%%%%%%%
 
@@ -79,6 +166,123 @@
 \end{problem}
 
 \begin{solution}
+  下面给出一个简单的Java实现的浮点数识别的代码：
+  \begin{lstlisting}
+    public class Main {
+    public static String lexFloatingConstant(String inputString) {
+        int position = 0;
+        char currentChar = inputString.charAt(position);
+
+        StringBuilder floatingConstant = new StringBuilder();
+
+        // Initial state
+        String state = "start";
+
+        while (currentChar != '\0') {
+            if (state.equals("start")) {
+                if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                    state = "digit_sequence";
+                } else if (currentChar == '.') {
+                    floatingConstant.append(currentChar);
+                    state = "fractional_constant";
+                } else {
+                    break;
+                }
+            } else if (state.equals("digit_sequence")) {
+                if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                } else if (currentChar == 'e' || currentChar == 'E' || currentChar == 'p' || currentChar == 'P') {
+                    floatingConstant.append(currentChar);
+                    state = "exponent_part";
+                } else if (currentChar == '.') {
+                    floatingConstant.append(currentChar);
+                    state = "fractional_part";
+                } else {
+                    break;
+                }
+            } else if (state.equals("fractional_constant")) {
+                if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                    state = "fractional_part";
+                } else {
+                    break;
+                }
+            } else if (state.equals("fractional_part")) {
+                if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                } else if (currentChar == 'e' || currentChar == 'E' || currentChar == 'p' || currentChar == 'P') {
+                    floatingConstant.append(currentChar);
+                    state = "exponent_part";
+                } else {
+                    break;
+                }
+            } else if (state.equals("exponent_part")) {
+                if (currentChar == '+' || currentChar == '-') {
+                    floatingConstant.append(currentChar);
+                    state = "exponent_sign";
+                } else if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                    state = "exponent_digit_sequence";
+                } else {
+                    break;
+                }
+            } else if (state.equals("exponent_sign")) {
+                if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                    state = "exponent_digit_sequence";
+                } else {
+                    break;
+                }
+            } else if (state.equals("exponent_digit_sequence")) {
+                if (Character.isDigit(currentChar)) {
+                    floatingConstant.append(currentChar);
+                } else {
+                    break;
+                }
+            }
+
+            position++;
+            if (position < inputString.length()) {
+                currentChar = inputString.charAt(position);
+            } else {
+                currentChar = '\0';
+            }
+        }
+
+        return floatingConstant.toString().trim();
+    }
+
+    public static void main(String[] args) {
+        String inputString = "3.14E+12";
+        String floatingConstant = lexFloatingConstant(inputString);
+        System.out.println(floatingConstant);
+    }
+}
+  \end{lstlisting}
+  状态转移图的文字描述如下，首先给出状态含义：
+  \begin{itemize}
+    \item start：初始状态，开始识别浮点数常量。
+    \item digit\_sequence：识别数字序列部分。
+    \item fractional\_constant：识别小数部分。
+    \item fractional\_part：继续识别小数部分。
+    \item exponent\_part：识别指数部分。
+    \item exponent\_sign：识别指数部分的正负号。
+    \item exponent\_digit\_sequence：识别指数部分的数字序列。
+  \end{itemize}
+  接下来，我们给出状态转移描述：
+  \begin{enumerate}[(1)]
+    \item 从初始状态 `start' 开始。
+    \item 如果当前字符是数字（[0-9]），转移到状态 "digit\_sequence"。
+    \item 如果当前字符是小数点（'.'），转移到状态 "fractional\_constant"。
+    \item 如果当前字符是 'e' 或 'E' 或 'p' 或 'P'，转移到状态 "exponent\_part"。
+    \item 如果当前状态是 "digit\_sequence"，可能转移到状态 "digit\_sequence"、"fractional\_part" 或 "exponent\_part"，取决于下一个字符。
+    \item 如果当前状态是 "fractional\_constant"，可能转移到状态 "fractional\_part"，取决于下一个字符。
+    \item 如果当前状态是 "fractional\_part"，可能继续识别数字序列，也可能转移到状态 "exponent\_part"，取决于下一个字符。
+    \item 如果当前状态是 "exponent\_part"，可能转移到状态 "exponent\_sign"，取决于下一个字符。
+    \item 如果当前状态是 "exponent\_sign"，可能转移到状态 "exponent\_digit\_sequence"，取决于下一个字符。
+    \item 如果当前状态是 "exponent\_digit\_sequence"，可能继续识别数字序列。
+  \end{enumerate}
 \end{solution}
 %%%%%%%%%%%%%%%
 
