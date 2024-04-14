@@ -1,0 +1,127 @@
+% hw4.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (4)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2024年04月14日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  \fig{width = 0.40\textwidth}{figs/climbing}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[$LL(1)$ 语法分析算法]
+  请证明 $LL(1)$ 语法分析算法的正确性。
+  \begin{enumerate}[(1)]
+    \item 做证明的第一步是``明确你要证明的是什么''。
+      所以, 请先陈述一个可以刻画 $LL(1)$ 语法分析算法正确性的定理。
+    \item 请给出证明。
+    \item $LL(1)$ 语法分析算法中预测分析表的构建方式如下:
+      对应每条产生式 $A \to \alpha$ 与终结符 $t$, 如果
+      \begin{align*}
+        & t \in \first(\alpha) \text{ 或者} \\[6pt]
+        & \epsilon \in \first(\alpha) \land t \in \follow(A)
+      \end{align*}
+      则在表格 $[A, t]$ 中填入 $A \to \alpha$ (编号)。
+
+      请问, 如果将第二条规则修改为
+      \[
+        \epsilon \in \first(\alpha)
+      \]
+      会发生什么?
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+% \pagebreak
+%%%%%%%%%%%%%%%
+\begin{problem}[ANTLR 4 与``优先级上升算法'']
+  如下文法 $\declgrammar$ 描述了 C 语言中的声明语法 (ANTLR 4 格式):
+
+  \input{cfg/decl}
+
+  注意, $((\;) \;\mid\; [\;])$ 中的外层结构 $( \ldots \mid \ldots)$
+  表示 ANTLR 中的``或者''子规则。
+  也就是说, 外层的 $(\;)$ 是 \texttt{.g4} 语法的一部分。
+  另外, 内层的 $(\;)$ 与 $[\;]$ 是文法 $\declgrammar$ 的一部分。
+  为了简略, 此处没有把它们放在引号内。
+
+  \begin{enumerate}[(1)]
+    \item 请给出 ANTLR 4 使用优先级上升算法改造后的文法。
+    \item 请给出 \texttt{(*(*a)())[]} 在改造后的文法下对应的语法分析树。
+      请给出关键的解释, 点到即可, 不必面面俱到。
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\beginoptional
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  一个上下文无关文法 $G$ 中的每条规则如果都满足以下三条规则之一,
+  则称其满足 Chomsky normal form (范式):
+  \begin{enumerate}[(1)]
+    \item $S \to \epsilon$
+    \item $A \to BC$
+    \item $A \to a$
+  \end{enumerate}
+  其中, $A$, $B$, $C$ 为非终结符, $a$ 为终结符。
+  $A$、$S$ 可为起始符号, 但 $B$、$C$ 均不可为起始符号。
+  另外, 仅当 $\epsilon \in L(G)$ 时, $G$ 才需要符合第一条产生式规则。
+  \begin{itemize}
+    \item 请证明, 任何上下文无关文法均可转化成等价的 Chmosky 范式形式。
+  \end{itemize}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}
+  在 ANTLR 4 中生成针对 $\declgrammar$ (C 语言中的声明语法)
+  文法的语法分析器。
+
+  \noindent 查阅并分析生成的源码, 说明 ANTLR 4 是如何实现优先级上升算法的。
+
+  \noindent 请对照代码片段 (截图) 进行解释。
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+请在 Zulip 平台讨论或将反馈发送至 \texttt{hfwei@nju.edu.cn}。
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
