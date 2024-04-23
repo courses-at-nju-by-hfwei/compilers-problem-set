@@ -1,0 +1,147 @@
+% hw3.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (3)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2024年03月31日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  \fig{width = 0.60\textwidth}{figs/pumping-lemma}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  请证明以下上下文无关文法表示语言
+  $\set{x \in \set{a, b}^{\ast} \mid x \;\text{中}\; a, b \;\text{个数相同}}$。
+
+  \input{cfg/cfg-equal-number-a-b-correct}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item[(a)] 首先证明该CFG可表示的任意字符串x都满足: x中a, b个数相同. \\
+    由于任何可用该CFG可表示的字符串都对应着至少一颗语法树,我们可以基于语法树高度$h$进行归纳证明. \\
+    奠基: \\
+    树高$h=1$时, 能够表达的字符串集合$S_0$为$\{\epsilon\}$, 满足每个元素的a,b个数相同. \\
+    归纳假设: \\
+    树高$h\leq k-1$时, 能够表达的字符串集合$S_h$, 满足每个元素的a,b个数相同. \\
+    归纳递推: \\
+    树高$h\leq k$时,有三种情况:
+    \begin{enumerate}
+        \item[1.] 匹配$V \rightarrow V_0V_1$规则,$V_0,V_1$对应的树高都小于k,利用归纳假设可以得到该情况下能够表达的字符串集合$S_k$满足条件. \\
+        \item[2.] 匹配$V \rightarrow aV_0b$规则,$V_0$对应的树高小于k,利用归纳假设可以得到该情况下能够表达的字符串集合$S_k$满足条件. \\
+        \item[3.] 匹配$V \rightarrow bV_0a$规则,$V_0$对应的树高小于k,利用归纳假设可以得到该情况下能够表达的字符串集合$S_k$满足条件. \\
+    \end{enumerate}
+    综合三种情况, 此时能够表达的字符串集合$S_k$, 满足每个元素的a,b个数相同.
+
+    \item[(b)] 集合$\{x\in \{a,b\}^* | x$中$a,b$个数相同$\}$中的元素都可以用该CFG表达. \\
+    令$L=\set{x \in \set{a, b}^{\ast} \mid x \;\text{中}\; a, b \;\text{个数相同}}$. \\
+    对于任意$s\in L$,基于字符串长度$l=|s|$进行归纳. \\
+    奠基: \\
+    字符串长度$l=0$时, $s$属于的字符串集合$S_0$为$\{\epsilon\}$, 满足每个元素都可以用该CFG表达. \\
+    归纳假设:\\ 
+    字符串长度$l\leq k-1$时, $s$属于的字符串集合$S_l$, 满足每个元素都可以用该CFG表达. \\
+    归纳递推: \\
+    字符串长度$\leq k$时,有四种情况
+    \begin{enumerate}
+        \item[1.] $s$最左端为$a$,最右端为$b$,令$s=as_0b$,因为$|s_0|\leq k-1$于是$s_0$可以用该CFG表达,进而s可以用该CFG表达
+        \item[2.] $s$最左端为$b$,最右端为$a$,与情况1.同理
+        \item[3.] $s$最左端为$a$,最右端为$a$,令$s=s_0s_1$,且满足$s_0$最左端为$a$,最右端为$b$;$s_1$最左端为$b$,最右端为$a$.(可以很容易证明必然能够找到满足条件的$s_0$和$s_1$)于是$s_0$和$s_1$可以用该CFG表达,进而s可以用该CFG表达.
+        \item[4.] $s$最左端为$b$,最右端为$b$,与情况3.同理
+    \end{enumerate}
+    综合四种情况,此时$s$属于的字符串集合$S_k$, 满足每个元素都可以用该CFG表达. \\
+\end{enumerate}
+根据(a)(b),可以得到该CFG表示语言$\set{x \in \set{a, b}^{\ast} \mid x \;\text{中}\; a, b \;\text{个数相同}}$
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\pagebreak
+%%%%%%%%%%%%%%%
+\begin{problem}
+  请证明以下两种 \texttt{if-else} 文法都是无二义性的,
+  并且实现了 ``\texttt{else} 与最近的未匹配的 \texttt{if} 匹配'' 的语义。
+  \begin{enumerate}[(1)]
+    \item 符合 ANTLR 4 中的``最前优先匹配原则''的如下文法:
+      \fig{width = 0.80\textwidth}{figs/ifstat-g4}
+
+      尝试: \url{https://github.com/courses-at-nju-by-hfwei/2024-compilers-coding/blob/main/src/main/antlr/ifstat/IfStat.g4}
+    \item 教材中改写后的文法:
+      \fig{width = 1.00\textwidth}{figs/ifstat-open-matched-g4}
+
+      尝试: \url{https://github.com/courses-at-nju-by-hfwei/2024-compilers-coding/blob/main/src/main/antlr/ifstat/IfStatOpenMatched.g4}
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item[(1)]
+    \textbf{无二义性}: \\
+    antlr4默认排在前面的语法规则优先级更高,无二义性. \\
+    \textbf{满足else与最近的未匹配的if匹配的语义}: \\
+    只需证明在\textbf{stat规则二}中的第一个stat不会匹配\textbf{stat规则一}即可,采用反证法: \\
+    假设在\textbf{stat规则二}中的第一个stat匹配\textbf{stat规则一},那么根据最前优先匹配规则,else应该与第一个stat中的if匹配,矛盾!\\
+    因此\textbf{stat规则二}中的第一个stat不会匹配\textbf{stat规则一},于是满足else与最近的未匹配的if匹配的语义.
+    \item[(2)]
+    \textbf{无二义性}: \\
+    若满足else与最近的未匹配的if匹配的语义,即可说明该文法不无二义性,我们直接证明下一步即可. \\
+    \textbf{满足else与最近的未匹配的if匹配的语义}: \\
+    与(1)类似,只需证明\textbf{matched\_stat规则一}和\textbf{open\_stat规则二}中的第一个matched\_stat不会匹配\textbf{open\_stat规则一},而显然matched\_stat不能匹配\textbf{open\_stat}的任何规则,因此直接从上下文无关语法层面上保证正确性.
+\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\beginoptional
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  请使用 Pumping Lemma 证明以下语言不是正则语言:
+  \begin{enumerate}[(1)]
+    \item $L = \set{x \in \set{a, b}^{\ast} \mid x \;\text{中}\; a, b \;\text{个数相同}}$。
+      \footnote{提示: 可以考虑 $s = a^{p} b^{p}$。}
+    \item $L = \set{a^{i}b^{j} \mid i > j}$.
+      \footnote{提示: 可以考虑 $s = a^{p + 1}b^{p}$。}
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item[(1)] 假设$L$是正则语言,那么令$n$为$L$对应的泵长度. \\
+     令$s = a^nb^n \in L$. \\
+     根据泵引理,可以令$s=xyz$,其中$|xy|\leq n,|y|\geq 1$. \\
+     易知$y$的只能由$a$组成,于是对于$\forall k > 1, xy^kz\notin L$,矛盾! \\
+     因此$L$不是正则语言.
+     \item[(2)] 假设$L$是正则语言,那么令$n$为$L$对应的泵长度. \\
+     令$s = a^{n+1}b^n \in L$. \\
+     根据泵引理,可以令$s=xyz$,其中$|xy|\leq n,|y|\geq 1$. \\
+     易知$y$的只能由$a$组成,于是对于$\forall k=0, xy^0z=xz\notin L$,矛盾! \\
+     因此$L$不是正则语言.
+\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+\beginfb
+
+请在 Zulip 平台讨论或将反馈发送至 \texttt{hfwei@nju.edu.cn}。
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
