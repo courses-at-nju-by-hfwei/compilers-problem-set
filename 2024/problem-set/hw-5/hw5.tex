@@ -10,7 +10,7 @@
 %%%%%%%%%%%%%%%%%%%%
 \title{编译原理作业 (5)}
 \me{\hspace{50pt}}{\hspace{70pt}}
-\date{2024年04月28日}
+\date{2024年05月05日}
 %%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \maketitle
@@ -65,6 +65,29 @@
 \end{solution}
 %%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%
+\begin{problem}
+  考虑文法 $\declgrammar$ (描述了 C 语言的声明语法):
+  \input{grammar/decl-ag}
+
+  请设计语法制导的翻译方案, 为 $\idkw$ 的类型提供英文/中文说明文档
+  (由于中英文语法结构的不同, 输出英文说明文档可能更容易; 例子见下页)。
+
+  你需要自行定义合适的属性, 请{\bf 指明}哪些是综合属性, 哪些是继承属性。
+
+  {注意: 对于处于最外层的 $D[]$, 不需要输出 \texttt{array of}, 只需输出 \texttt{array}。}
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+
+  \newpage
+  \figcap{width = 0.42\textwidth}{figs/D-parse-tree-pointer}{\texttt{(*(*a)())[]}: declare \texttt{a} as pointer to function returning pointer to array}
+  \figcap{width = 0.42\textwidth}{figs/D-parse-tree-func}{\texttt{(**a())[]}: declare a as function returning pointer to pointer to array}
+  \figcap{width = 0.42\textwidth}{figs/D-parse-tree-array}{\texttt{(*(*a[])())[]}: declare \texttt{a} as array of pointer to function returning pointer to array}
+%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%
 % 如果没有需要订正的题目，可以把这部分删掉
 
@@ -73,14 +96,14 @@
 
 %%%%%%%%%%%%%%%%%%%%
 % 如果没有反馈，可以把这部分删掉
-\beginfb
+% \beginfb
 
-你可以写
-\begin{itemize}
-  \item 对课程及教师的建议与意见
-  \item 教材中不理解的内容
-  \item 希望深入了解的内容
-  \item $\cdots$
-\end{itemize}
+% 你可以写
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item $\cdots$
+% \end{itemize}
 %%%%%%%%%%%%%%%%%%%%
 \end{document}
