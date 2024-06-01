@@ -1,0 +1,122 @@
+% hw6.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (6)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2024年06月01日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  请{\bf 分别}采用地址回填方案与非地址回填方案将下面的伪代码翻译成中间代码。
+
+  \noindent 要求画出语法分析树, 并在每个节点上标注相应的属性。
+  \begin{algorithm}[H]
+    \begin{algorithmic}[1]
+      \Procedure{AreYouOK}{\text{score}}
+        \If{$\text{score} \ge 60$ \texttt{||} (exam is canceled)}
+          \While{\text{true}}
+            \State \text{\bf print} ``WanSui''
+          \EndWhile
+        \Else
+          \State \text{\bf print} ``Sad''
+        \EndIf
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+\beginoptional
+%%%%%%%%%%%%%%%
+\begin{problem}
+  代码仓库中的
+  \href{https://github.com/courses-at-nju-by-hfwei/2024-compilers-coding/blob/main/src/main/java/codegen/hardcontrol/CodeGenListener.java}{CodeGenListener.java @ github}
+  实现了 \href{https://www.bilibili.com/video/BV1rx4y1W7DT/?spm_id_from=333.788&vd_source=e3cbbf5ca80db268fa006d63626e267e}{hard 模式的控制流语句翻译方案 @ bilibili}。
+
+  \noindent 请在此基础上实现 graphviz 可视化功能, 如下图所示。
+  \fig{width = 0.60\textwidth}{figs/while}
+
+  \noindent 能实现动画演示效果就更好了。
+
+  \noindent 请提交代码 pull request。
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  代码仓库中的
+  \href{https://github.com/courses-at-nju-by-hfwei/2024-compilers-coding/blob/main/src/main/java/codegen/easycontrol/CodeGenVisitor.java}{CodeGenVisitor.java @ github}
+  实现了 \href{https://www.bilibili.com/video/BV1oD421w7Je/?spm_id_from=333.788&vd_source=e3cbbf5ca80db268fa006d63626e267e}{easy 模式的控制流语句翻译方案 @ bilibili}。
+
+  \noindent 请在此基础上实现 graphviz 可视化功能, 如上图所示。
+
+  \noindent 能实现动画演示效果就更好了。
+
+  \noindent 请提交代码 pull request。
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+  代码仓库中的
+  \href{https://github.com/courses-at-nju-by-hfwei/2024-compilers-coding/tree/main/src/main/java/codegen/backpatch}{codegen/backpatch/ @ github}
+  预计实现\href{https://www.bilibili.com/video/BV1aJ4m1N7ZF/?spm_id_from=333.788&vd_source=e3cbbf5ca80db268fa006d63626e267e}{控制流语句翻译的地址回填方案 @ bilibili}。
+
+  \noindent 请完成代码。
+
+  \noindent 能实现 graphviz 可视化或者动画演示效果就更好了。
+
+  \noindent 请提交代码 pull request。
+\end{problem}
+
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+% \beginfb
+
+% 你可以写
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item $\cdots$
+% \end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
