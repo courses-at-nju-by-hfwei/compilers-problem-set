@@ -1,0 +1,76 @@
+% hw9.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (9)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2024年06月19日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[控制流图、SSA、寄存器分配]
+	\input{algs/exam}
+
+	\begin{enumerate}[(1)]
+		\item 请画出 SSA 形式的控制流图。
+		\item 请消除上述步骤中的 $\phi$ 指令。
+		\item 假设仅有两个物理寄存器, 请针对上述步骤得到的代码进行寄存器分配~\footnote{
+			据悉, 2 班介绍线性扫描分配算法时没有使用带循环的控制流图举例。
+			因此, 如果考试题目涉及寄存器分配，要么相应的控制流图中不含循环，要么不采用
+			线性扫描分配算法也可以很直观地得到结果。}。
+	\end{enumerate}
+\end{problem}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\beginoptional
+
+%%%%%%%%%%%%%%%
+\begin{problem}[LLVM 中的寄存器分配]
+	观看视频 \href{https://shorter.me/h49cm}{2023年华为毕昇杯技术培训会 | 第四场 (2): 浅谈LLVM贪心寄存器分配算法}
+	了解 LLVM 中的寄存器分配算法。
+\end{problem}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[线性扫描寄存器分配]
+	请说明为什么基本块顺序的不同不影响线性扫描寄存器分配算法的正确性?
+	(注: 你首先要明确线性扫描寄存器分配算法的正确性是什么含义。)
+\end{problem}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+% \beginfb
+
+% 你可以写
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item $\cdots$
+% \end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}
