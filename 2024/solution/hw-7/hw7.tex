@@ -1,0 +1,96 @@
+% hw7.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (7)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2024年06月08日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[RISC-V; 2023 年期末测试题目]
+	考虑如下计算第 $n$ 项 Fibonacci 数的 C 语言程序 \texttt{fib-rec.c}
+	\fig{width = 0.70\textwidth}{figs/fib-rec-c}
+
+	下面两页给出了 \texttt{fib-rec.c} 对应的 RISC-V 代码片段,
+	{\bf 请填充缺失的代码行}。
+
+	{\bf 说明:}
+	\begin{itemize}
+		\item 第 17、23、49 行代码是相同的, 仅计一次分数。
+		\item 第 42 行处, 假设 \texttt{fib-rec.c} 中的 \texttt{n} 占 4 字节,
+		  也就是一个 \texttt{word} 大小。
+		\item 所有填充处{\bf 仅允许}使用如下指令 (包括伪指令; 汇编伪指令不限):
+			\texttt{li}、\texttt{add}、\texttt{addi}、\texttt{sub}、
+		  \texttt{ble}、\texttt{bge}、\texttt{lw}、\texttt{sw}、
+			\texttt{jal}、\texttt{jalr}、\texttt{ecall}、\texttt{j}、\texttt{la}。
+	\end{itemize}
+
+	\fig{width = 0.70\textwidth}{figs/fib-rec-25-blank}
+	\fig{width = 0.70\textwidth}{figs/fib-rec-49-blank}
+\end{problem}
+
+\begin{solution}
+	\fig{width = 0.70\textwidth}{figs/fib-rec-25}
+	\fig{width = 0.70\textwidth}{figs/fib-rec-49}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+% \pagebreak
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+	编写两段 RISC-V 函数代码，
+	实现控制流在这两个函数之间``跳来跳去''的效果。
+\end{problem}
+
+\begin{solution}
+	{\bf 先留给大家思考、尝试。}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+	阅读理解《The RISC-V Reader》\footnote{\href{https://github.com/courses-at-nju-by-hfwei/compilers-resources/blob/master/material/riscv/The\%20RISC-V\%20Reader\%20An\%20Open\%20Architecture\%20Atlas\%20(Chinese\%20Translation).pdf}
+	{The RISC-V Reader @ compilers-resources}}
+	\footnote{\href{https://github.com/courses-at-nju-by-hfwei/compilers-resources/blob/master/material/riscv/MIT\%206.191\%20(6.004)\%20RISC-V\%20ISA\%20Reference\%20Card.pdf}{MIT 6.191 (6.004) RISC-V ISA Reference Card @ compilers-resources}}
+	图 2.8 中插入排序 C 语言代码 (图 2.5)
+	对应的 RISC-V 代码。
+\end{problem}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+% \beginfb
+
+% 你可以写
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item $\cdots$
+% \end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}

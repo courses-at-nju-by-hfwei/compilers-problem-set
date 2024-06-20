@@ -1,0 +1,105 @@
+% hw8.tex
+
+% !TEX program = xelatex
+%%%%%%%%%%%%%%%%%%%%
+% see http://mirrors.concertpass.com/tex-archive/macros/latex/contrib/tufte-latex/sample-handout.pdf
+% for how to use tufte-handout
+\documentclass[a4paper, justified]{tufte-handout}
+
+\input{hw-preamble} % feel free to modify this file if you understand LaTeX well
+%%%%%%%%%%%%%%%%%%%%
+\title{编译原理作业 (8)}
+\me{\hspace{50pt}}{\hspace{70pt}}
+\date{2024年06月17日}
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism % PLEASE DON'T DELETE THIS LINE!
+%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+	\fig{width = 0.60\textwidth}{figs/parsing}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%
+\beginrequired
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}[$LR$ 语法分析]
+  考虑文法 $G$ (已作增广处理, 即包括 $S' \to S$ 产生式):
+
+	\input{grammar/lr}
+
+  \begin{enumerate}[(1)]
+    \item 请给出 $G$ 所对应的 $LR(0)$ 自动机。
+		\item 请填写 $G$ 所对应的 $SLR$ 分析表 (如果行数不够, 可自行添加)。
+		\item 文法 $G$ 是 $SLR$ 文法吗?
+		\item 文法 $G$ 是 $LR(0)$ 文法吗?
+  \end{enumerate}
+
+	\newpage
+	\input{table/slr}
+\end{problem}
+
+\begin{solution}
+	\fig{width = 1.30\textwidth}{figs/slr}
+	文法 $G$ 既是 $SLR$ 文法, 也是 $LR(0)$ 文法。
+
+	\vspace{0.20cm}
+	\red{附赠一个思考题:} $LR(0)$ 分析表与 $SLR$ 分析表的区别在于
+	前者会把后者中空白的一些单元格填上``归约''。
+	问题是, 原本空白的单元格表示的是``error'',
+	现在填上``归约'', 是否会导致原本无法解析的字符串被成功解析了?
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+	请给出一个非 $SLR$ 文法的 $LL(1)$ 文法。
+	\fig{width = 0.60\textwidth}{figs/cfg-hierarchy}
+\end{problem}
+
+\begin{solution}
+	示例文法 $G$ 如下~\footnote{来自《编译原理 习题精选与解析》陈意云、张昱编著}:
+	\input{grammar/ll1-not-slr}
+
+	\begin{itemize}
+		\item 请自行验证 $G$ 是 $LL(1)$ 文法。
+		\item $G$ 不是 $SLR$ 文法: 对于任意句子,
+		  在面临第一个符号时进行$\epsilon$归约。
+			由于 $\text{{Follow}}(A) = \text{{Follow}}(B) = \set{a, b}$,
+			无法确定是归约 $A \to \epsilon$ 还是 $B \to \epsilon$,
+			因此产生了``归约-归约''冲突。
+	\end{itemize}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+\begin{problem}
+	请证明: $LL(1)$ 文法集合包含于 $LR(1)$ 文法集合。
+\end{problem}
+
+\begin{solution}
+	\red{\bf \LARGE Please let me know if you have an answer.}
+\end{solution}
+%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有需要订正的题目，可以把这部分删掉
+
+% \begincorrection
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+% 如果没有反馈，可以把这部分删掉
+% \beginfb
+
+% 你可以写
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item $\cdots$
+% \end{itemize}
+%%%%%%%%%%%%%%%%%%%%
+\end{document}

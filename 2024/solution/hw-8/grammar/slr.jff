@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
+	<type>grammar</type>&#13;
+	<!--The list of productions.-->&#13;
+	<production>&#13;
+		<left>S</left>&#13;
+		<right>(L)</right>&#13;
+	</production>&#13;
+	<production>&#13;
+		<left>S</left>&#13;
+		<right>x</right>&#13;
+	</production>&#13;
+	<production>&#13;
+		<left>L</left>&#13;
+		<right>S</right>&#13;
+	</production>&#13;
+	<production>&#13;
+		<left>L</left>&#13;
+		<right>L,S</right>&#13;
+	</production>&#13;
+</structure>
